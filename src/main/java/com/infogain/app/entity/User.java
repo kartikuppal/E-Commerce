@@ -22,11 +22,14 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class User
 {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(length=5)
 	private Integer id;
 	
@@ -50,12 +53,12 @@ public class User
 	private String address;
 	
 	@NotNull(message="PostalCode cannot be null")
-	@Size(min=6,max=6)
+	//@Size(min=6,max=6)
 	@Column(length=6)
 	private Integer postalCode;
 	
 	@NotNull(message="Mobile Number cannot be null")
-	@Size(min=10,max=10)
+	//@Size(min=10,max=10)
 	@Column(length=10)
 	private BigInteger mobileNumber;
 	
