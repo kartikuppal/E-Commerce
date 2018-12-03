@@ -26,14 +26,19 @@ public class UserController {
 	@Autowired
 	IUserRepo userRepo;
 
+	 @RequestMapping(path = "/demo")
+	    public String index() {
+
+	        return "index";
+	    }    
+	
 	@RequestMapping("/login")
-	public User loginUser(@RequestHeader(value = "UserName") String userName,
+	public void loginUser(@RequestHeader(value = "UserName") String userName,
 			@RequestHeader(value = "Password") String password) throws UserException {
 		Boolean flag = userService.loginUser(userName, password);
-		if (flag == true) {
-
-		}
-		return null;
+		System.out.println(flag);
+		
+		
 	}
 
 	@GetMapping("/user")
@@ -49,7 +54,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public User userInsert(@RequestBody User user) {
+	public User userInsert(@RequestBody User user) throws UserException {
 		return userService.insertUser(user);
 
 	}
