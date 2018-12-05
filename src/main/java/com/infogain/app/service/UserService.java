@@ -1,13 +1,11 @@
 package com.infogain.app.service;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.infogain.app.dto.UserDto;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IUserRepo;
@@ -24,16 +22,13 @@ public class UserService implements IUserService {
 		Boolean flag = false;
 		if (user == null) {
 			throw new CustomException("User Name does not exist");
-
 		}
-
 		else {
 			if (userName.equals(user.getEmail()) && password.equals(user.getPassword())) {
 				flag = true;
 			}
 		}
 		return flag;
-
 	}
 
 	@Override
@@ -53,10 +48,11 @@ public class UserService implements IUserService {
 
 		User existingUser = userRepo.findByEmail(user.getEmail());
 		User existingMobileNumber = userRepo.findByMobileNumber(user.getMobileNumber());
+		
 		Integer addressLength = user.getAddress().length();
 		Integer mobileNumberLength = user.getMobileNumber().toString().length();
 		Integer postalCodeLength = user.getPostalCode().toString().length();
-
+		
 		if (existingUser != null) {
 			throw new CustomException("Email already exist");
 		} else if (existingMobileNumber != null) {
@@ -69,9 +65,7 @@ public class UserService implements IUserService {
 				throw new CustomException("Mobile number must be of exact 10 digits");
 			} else if (postalCodeLength != 6) {
 				throw new CustomException("Postal code must be of exact 6 digits");
-
 			}
-
 			else {
 				user.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
 				user.setName(user.getName());
@@ -79,13 +73,11 @@ public class UserService implements IUserService {
 				user.setEmail(user.getEmail());
 				user.setMobileNumber(user.getMobileNumber());
 				user.setPostalCode(user.getPostalCode());
-
 			}
 		}
-
 		return userRepo.save(user);
 	}
-
+	
 	@Override
 	public User updateUser(User userDetail, Integer id) throws CustomException {
 		User existingMobileNumber = userRepo.findByMobileNumber(userDetail.getMobileNumber());

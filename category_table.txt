@@ -1,0 +1,16 @@
+insert into project.category values(1,'Electronics are equipments (analog or digital) intended for everyday use, typically in private homes.','Electronics');
+
+
+insert into project.category values(2,'Clothes store is any shop which sells items of ready-made clothing. A small shop which sells expensive or designer clothing. A shop that sells clothes for a narrowly-restricted market such as school uniforms or outdoor sports.','Clothing');
+
+
+insert into project.category values(3,'A grocery store is a retail shop that primarily sells food. A grocer is a bulk seller of food. Grocery stores also offer non-perishable foods that are packaged in bottles, boxes, and cans; some also have bakeries, butchers, delis, and fresh produce.','Grocery');
+
+
+insert into project.category values(4,'A store that sells health care products and medicine. Customers can buy both over-the-counter and prescription medication at a drug store.','Medicines');
+
+
+insert into project.category values(5,'A Toy store is a retail business specializing in selling toys. No longer held to the limitations of a physical outlet, many toy stores now transact business over the Internet in addition to shops on the street.','Toys');
+
+
+insert into project.category values(6,'A bakery is an establishment that produces and sells flour-based food baked in an oven such as bread, cookies, cakes, pastries, and pies.','Bakery');

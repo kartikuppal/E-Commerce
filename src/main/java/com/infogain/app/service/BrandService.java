@@ -10,7 +10,7 @@ import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IBrandRepo;
 
 @Service
-public class BrandService {
+public class BrandService implements IBrandService{
 	@Autowired
 	IBrandRepo brandRepo;
 	

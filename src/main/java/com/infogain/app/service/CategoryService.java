@@ -10,7 +10,7 @@ import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.ICategoryRepo;
 
 @Service
-public class CategoryService {
+public class CategoryService implements ICategoryService {
 	@Autowired
 	ICategoryRepo categoryRepo;
 	

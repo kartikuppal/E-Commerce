@@ -5,17 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.infogain.app.entity.Product;
 import com.infogain.app.entity.Store;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IStoreRepo;
 
 @Service
-public class StoreService {
+public class StoreService implements IStoreService {
 	@Autowired
 	IStoreRepo storeRepo;
 	
 	/*inserting values*/
 	
+	@SuppressWarnings("unchecked")
 	public Store insertStore(Store store) throws CustomException {
 		Store existingContactNo = storeRepo.findByContactNo(store.getContactNo());
 		
@@ -32,6 +34,10 @@ public class StoreService {
 						store.setAddress(store.getAddress());
 						store.setPostalCode(store.getPostalCode());
 						store.setContactNo(store.getContactNo());
+						
+						/*adding products in store*/
+						
+						store.getProduct().forEach((product)->{product.setStore((List<Store>) store);});
 					}
 					else {
 						throw new CustomException("Contact number must be of length 10");
