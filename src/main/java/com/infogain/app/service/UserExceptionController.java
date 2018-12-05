@@ -1,4 +1,4 @@
-package com.infogain.app.service;
+/*package com.infogain.app.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,4 +12,4 @@ public ResponseEntity<Object> userExceptionHandler(UserException userException)
 {
 return new ResponseEntity<>(userException.getMessage(),HttpStatus.IM_USED);
 }
-}
+}*/

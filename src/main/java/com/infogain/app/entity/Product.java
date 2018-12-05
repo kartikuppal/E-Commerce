@@ -21,17 +21,15 @@ import javax.validation.constraints.Size;
 public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(length=10)
-	private Integer id;
+	@Column(length=10,columnDefinition="Integer(5) default 0")
+	private Integer id=1;
 	
 	@NotNull(message="Name cannot be null")
-	@Size(min=2, max=50)
 	@Column(length=50)
 	private String name;
 	
 	@NotNull(message="Price cannot be Negati")
 	@Column(length=12)
-	@Size(min=1)
 	private Double price;
 	
 	@NotNull

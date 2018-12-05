@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Entity
 public class Store {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length=5)
 	private Integer id;
 	

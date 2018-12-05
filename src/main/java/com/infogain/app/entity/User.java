@@ -28,13 +28,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class User
 {
 	@Id
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(length=5)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(length=5,columnDefinition="Integer(5) default 0"/*,columnDefinition = "Integer default 1"*/)
 	private Integer id;
 	
 	@NotNull(message="Password cannot be null")
-	@Size(min=8, max=15)
 	@Column(length=15)
 	private String password;
 	
@@ -48,7 +46,6 @@ public class User
 	private String email;
 	
 	@NotNull(message="Address cannot be blank")
-	@Size(min=10,max=255)
 	@Column(length=255)
 	private String address;
 	

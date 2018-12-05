@@ -2,6 +2,8 @@ package com.infogain.app.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +27,7 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	IUserRepo userRepo;
-
-	 @RequestMapping(path = "/demo")
-	    public String index() {
-
-	        return "index";
-	    }    
+  
 	
 	@RequestMapping("/login")
 	public void loginUser(@RequestHeader(value = "UserName") String userName,
@@ -60,7 +57,7 @@ public class UserController {
 	}
 
 	@PutMapping("/user/{id}")
-	public User updateUser(@RequestBody User user, @PathVariable(value = "id") Integer userId) {
+	public User updateUser(@RequestBody User user, @PathVariable(value = "id") Integer userId) throws UserException {
 		return userService.updateUser(user, userId);
 
 	}
