@@ -37,12 +37,12 @@ public class Store {
 	private String address;
 	
 	@NotNull
-	@Size(min=6,max=6)
+	//@Size(min=6,max=6)
 	@Column(length=6)
 	private Integer postalCode;
 	
 	@NotNull
-	@Size(min=10,max=10)
+	//@Size(min=10,max=10)
 	@Column(unique=true,length=10)
 	private BigInteger contactNo;
 
