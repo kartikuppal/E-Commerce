@@ -1,6 +1,7 @@
 package com.infogain.app.service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infogain.app.dto.UserDto;
+import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
+import com.infogain.app.repository.IStoreRepo;
 import com.infogain.app.repository.IUserRepo;
 
 @Service
@@ -17,6 +20,8 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private IUserRepo userRepo;
+	@Autowired
+	private IStoreRepo storeRepo;
 
 	@Override
 	public Boolean loginUser(String userName, String password) throws CustomException {
@@ -47,6 +52,7 @@ public class UserService implements IUserService {
 		User user = userRepo.findById(id).get();
 		return user;
 	}
+
 
 	@Override
 	public User insertUser(User user) throws CustomException {
@@ -101,11 +107,9 @@ public class UserService implements IUserService {
 			throw new CustomException("Address length must be greater than 10 digits");
 		} else if (mobileNumberLength != 10) {
 			throw new CustomException("Mobile number must be of exact 10 digits");
-		} 
-		else if (existingMobileNumber != null) {
+		} else if (existingMobileNumber != null) {
 			throw new CustomException("Mobile number already exist");
-		}
-		else if (postalCodeLength != 6) {
+		} else if (postalCodeLength != 6) {
 			throw new CustomException("Postal code must be of exact 6 digits");
 
 		}
