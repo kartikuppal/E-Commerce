@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Product {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(length=10,columnDefinition="Integer(5) default 0")
 	private Integer id=1;
 	

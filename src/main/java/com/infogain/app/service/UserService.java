@@ -9,20 +9,21 @@ import org.springframework.stereotype.Service;
 
 import com.infogain.app.dto.UserDto;
 import com.infogain.app.entity.User;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IUserRepo;
 
 @Service
 public class UserService implements IUserService {
-	
+
 	@Autowired
 	private IUserRepo userRepo;
 
 	@Override
-	public Boolean loginUser(String userName, String password) throws UserException {
+	public Boolean loginUser(String userName, String password) throws CustomException {
 		User user = userRepo.findByEmail(userName);
 		Boolean flag = false;
 		if (user == null) {
-			throw new UserException("User Name does not exist");
+			throw new CustomException("User Name does not exist");
 
 		}
 
@@ -48,24 +49,27 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User insertUser(User user) throws UserException {
+	public User insertUser(User user) throws CustomException {
 
 		User existingUser = userRepo.findByEmail(user.getEmail());
-		Integer addressLength = user.getAddress().length();	
+		User existingMobileNumber = userRepo.findByMobileNumber(user.getMobileNumber());
+		Integer addressLength = user.getAddress().length();
 		Integer mobileNumberLength = user.getMobileNumber().toString().length();
 		Integer postalCodeLength = user.getPostalCode().toString().length();
 
-		if (existingUser == null) {
+		if (existingUser != null) {
+			throw new CustomException("Email already exist");
+		} else if (existingMobileNumber != null) {
+			throw new CustomException("Mobile number already exist");
+		} else {
 
 			if (addressLength <= 10) {
-				throw new UserException("Address length must be greater than 10 digits");
-			}
-			else if (mobileNumberLength != 10) {
-				throw new UserException("Mobile number must be of exact 10 digits");
-			}
-			else if(postalCodeLength != 6){
-				throw new UserException("Postal code must be of exact 6 digits");
-				
+				throw new CustomException("Address length must be greater than 10 digits");
+			} else if (mobileNumberLength != 10) {
+				throw new CustomException("Mobile number must be of exact 10 digits");
+			} else if (postalCodeLength != 6) {
+				throw new CustomException("Postal code must be of exact 6 digits");
+
 			}
 
 			else {
@@ -77,39 +81,36 @@ public class UserService implements IUserService {
 				user.setPostalCode(user.getPostalCode());
 
 			}
-		} else {
-			throw new UserException("Email already exists");
 		}
+
 		return userRepo.save(user);
 	}
-	
-	
 
 	@Override
-	public User updateUser(User userDetail, Integer id) throws UserException {
+	public User updateUser(User userDetail, Integer id) throws CustomException {
+		User existingMobileNumber = userRepo.findByMobileNumber(userDetail.getMobileNumber());
 		User user = userRepo.findById(id).get();
 		Integer passwordLength = userDetail.getPassword().length();
-		Integer addressLength = userDetail.getAddress().length();	
+		Integer addressLength = userDetail.getAddress().length();
 		Integer mobileNumberLength = userDetail.getMobileNumber().toString().length();
 		Integer postalCodeLength = userDetail.getPostalCode().toString().length();
-		System.out.println(passwordLength);
 
-		if(passwordLength<8 || passwordLength>15)
-		{
-			throw new UserException("Password length must be 8 to 15 digits");
+		if (passwordLength < 8 || passwordLength > 15) {
+			throw new CustomException("Password length must be 8 to 15 digits");
+		} else if (addressLength <= 10) {
+			throw new CustomException("Address length must be greater than 10 digits");
+		} else if (mobileNumberLength != 10) {
+			throw new CustomException("Mobile number must be of exact 10 digits");
+		} 
+		else if (existingMobileNumber != null) {
+			throw new CustomException("Mobile number already exist");
 		}
-		else if (addressLength <= 10) {
-			throw new UserException("Address length must be greater than 10 digits");
+		else if (postalCodeLength != 6) {
+			throw new CustomException("Postal code must be of exact 6 digits");
+
 		}
-		else if (mobileNumberLength != 10) {
-			throw new UserException("Mobile number must be of exact 10 digits");
-		}
-		else if(postalCodeLength != 6){
-			throw new UserException("Postal code must be of exact 6 digits");
-			
-		}
-		
-		 else {
+
+		else {
 			user.setPassword(userDetail.getPassword());
 			user.setName(userDetail.getName());
 			user.setAddress(userDetail.getAddress());
@@ -125,7 +126,5 @@ public class UserService implements IUserService {
 		userRepo.deleteById(id);
 
 	}
-
-
 
 }

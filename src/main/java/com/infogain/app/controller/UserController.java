@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.entity.User;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IUserRepo;
-import com.infogain.app.service.UserException;
 import com.infogain.app.service.UserService;
 
 @RestController
@@ -31,7 +31,7 @@ public class UserController {
 	
 	@RequestMapping("/login")
 	public void loginUser(@RequestHeader(value = "UserName") String userName,
-			@RequestHeader(value = "Password") String password) throws UserException {
+			@RequestHeader(value = "Password") String password) throws CustomException {
 		Boolean flag = userService.loginUser(userName, password);
 		System.out.println(flag);
 		
@@ -51,13 +51,13 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public User userInsert(@RequestBody User user) throws UserException {
+	public User userInsert(@RequestBody User user) throws CustomException {
 		return userService.insertUser(user);
 
 	}
 
 	@PutMapping("/user/{id}")
-	public User updateUser(@RequestBody User user, @PathVariable(value = "id") Integer userId) throws UserException {
+	public User updateUser(@RequestBody User user, @PathVariable(value = "id") Integer userId) throws CustomException {
 		return userService.updateUser(user, userId);
 
 	}
