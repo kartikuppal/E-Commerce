@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.UserDto;
+import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IUserRepo;
@@ -31,11 +32,16 @@ public class UserController {
   
 	
 	@RequestMapping("/login")
-	public void loginUser(@RequestHeader(value = "UserName") String userName,
+	public User loginUser(@RequestHeader(value = "UserName") String userName,
 			@RequestHeader(value = "Password") String password) throws CustomException {
 		Boolean flag = userService.loginUser(userName, password);
-		System.out.println(flag);
-		
+		User user=new User();
+		if(flag==true)
+		{
+			user = userRepo.findByEmail(userName);
+		}
+		System.out.println(user);
+		return user;
 		
 	}
 
@@ -52,8 +58,9 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public User userInsert(@RequestBody User user) throws CustomException {
-		return userService.insertUser(user);
+	public User userInsert(@RequestBody UserDto userDto) throws CustomException {
+		
+		return userService.insertUserDto(userDto);
 
 	}
 

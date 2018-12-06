@@ -4,17 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.infogain.app.entity.Brand;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IBrandRepo;
 
 @Service
+
 public class BrandService implements IBrandService{
+
+
+
 	@Autowired
 	IBrandRepo brandRepo;
 	
-	/*inserting values*/
+	//inserting values
 	
 	public Brand insertBrand(Brand brand) throws CustomException {
 
@@ -32,19 +35,21 @@ public class BrandService implements IBrandService{
 	}
 	
 	/*displaying values*/
-	
+	@Override
 	public List<Brand> displayAllBrands() {
 		return brandRepo.findAll();
 	}
 	
 	/*displaying values by id*/
-	
+	@Override
 	public Brand displayBrandById(Integer id) {
 		return brandRepo.findById(id).get();
 	}
 	
-	/*updating values by id*/
+
 	
+	/*updating values by id*/
+	@Override
 	public Brand updateBrand(Brand updatedBrand, Integer id) throws CustomException {
 		
 		Brand brand = brandRepo.findById(id).get();
@@ -63,8 +68,10 @@ public class BrandService implements IBrandService{
 	}
 	
 	/*deleting values by id*/
-	
+	@Override
 	public void deleteBrand(Integer id) {
 		brandRepo.deleteById(id);
 	}
+
+
 }

@@ -22,27 +22,27 @@ import org.springframework.stereotype.Component;
 @Entity
 public class Store {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length=5)
 	private Integer id;
 	
 	@NotNull(message="Name cannot be null")
-	@Size(min=2, max=50)
+	//@Size(min=2, max=50)
 	@Column(length=50)
 	private String name;
 	
 	@NotNull(message="Address cannot be blank")
-	@Size(min=10,max=255)
+	//@Size(min=10,max=255)
 	@Column(length=255)
 	private String address;
 	
 	@NotNull
-	@Size(min=6,max=6)
+	//@Size(min=6,max=6)
 	@Column(length=6)
 	private Integer postalCode;
 	
 	@NotNull
-	@Size(min=10,max=10)
+	//@Size(min=10,max=10)
 	@Column(unique=true,length=10)
 	private BigInteger contactNo;
 
