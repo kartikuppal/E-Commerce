@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infogain.app.entity.Product;
-import com.infogain.app.entity.User;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IProductRepo;
 
 @Service
@@ -29,19 +29,19 @@ public class ProductService implements IProductService{
 	}
 
 	@Override
-	public Product insertProduct(Product product) throws ProductException {
+	public Product insertProduct(Product product) throws CustomException {
 				
 		if(product.getPrice()<0)
 		{
-			throw new ProductException("Price cannot be negative");
+			throw new CustomException("Price cannot be negative");
 		}
 		else if(product.getWeight()<0)
 		{
-			throw new ProductException("Weight cannot be negative");
+			throw new CustomException("Weight cannot be negative");
 		}
 		else if(product.getRating()<0 || product.getRating()>10)
 		{
-			throw new ProductException("Rating can be given between 0 to 10 only");
+			throw new CustomException("Rating can be given between 0 to 10 only");
 		}
 		
 		else{
@@ -57,19 +57,19 @@ public class ProductService implements IProductService{
 	}
 
 	@Override
-	public Product updateProduct(Product productDetail, Integer id) throws ProductException {
+	public Product updateProduct(Product productDetail, Integer id) throws CustomException {
 		Product product = productRepo.findById(id).get();
 		if(productDetail.getPrice()<0)
 		{
-			throw new ProductException("Price cannot be negative");
+			throw new CustomException("Price cannot be negative");
 		}
 		else if(productDetail.getWeight()<0)
 		{
-			throw new ProductException("Weight cannot be negative");
+			throw new CustomException("Weight cannot be negative");
 		}
 		else if(productDetail.getRating()<0 || productDetail.getRating()>10)
 		{
-			throw new ProductException("Rating can be given between 0 to 10 only");
+			throw new CustomException("Rating can be given between 0 to 10 only");
 		}
 		
 		else{

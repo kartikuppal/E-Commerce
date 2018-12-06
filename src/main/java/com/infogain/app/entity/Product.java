@@ -4,10 +4,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Product {
@@ -45,11 +49,11 @@ public class Product {
 	@Column(length=2)
 	private Byte rating;
 
-	@ManyToMany(mappedBy = "product")
+	@ManyToMany(mappedBy = "product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	List<Store> store = new ArrayList<>();
 
-	@ManyToMany(mappedBy = "product")
-	List<Category> category = new ArrayList<>();
+	/*@ManyToOne
+	private Category category;*/
 
 	@ManyToMany
 	List<Brand> brand = new ArrayList<>();
@@ -109,7 +113,8 @@ public class Product {
 	public void setRating(Byte rating) {
 		this.rating = rating;
 	}
-
+	
+	@JsonIgnore
 	public List<Store> getStore() {
 		return store;
 	}
@@ -118,13 +123,13 @@ public class Product {
 		this.store = store;
 	}
 
-	public List<Category> getCategory() {
+	/*public List<Category> getCategory() {
 		return category;
 	}
 
 	public void setCategory(List<Category> category) {
 		this.category = category;
-	}
+	}*/
 
 	public List<Brand> getBrand() {
 		return brand;
@@ -140,7 +145,7 @@ public class Product {
 	}
 
 	public Product(Integer id, String name, Double price, Date manufacturingDate, Float weight, String size,
-			Byte rating, List<Store> store, List<Category> category, List<Brand> brand) {
+			Byte rating, List<Store> store, List<Brand> brand) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -150,15 +155,13 @@ public class Product {
 		this.size = size;
 		this.rating = rating;
 		this.store = store;
-		this.category = category;
 		this.brand = brand;
 	}
 
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", manufacturingDate=" + manufacturingDate
-				+ ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", store=" + store + ", category="
-				+ category + ", brand=" + brand + "]";
+				+ ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", store=" + store + ", brand=" + brand + "]";
 	}
 
 }

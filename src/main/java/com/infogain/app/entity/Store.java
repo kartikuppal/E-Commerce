@@ -46,7 +46,7 @@ public class Store {
 	@Column(unique=true,length=10)
 	private BigInteger contactNo;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	List<Product> product = new ArrayList<>();
 	
 	@ManyToMany
@@ -129,6 +129,6 @@ public class Store {
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", name=" + name + ", address=" + address + ", postalCode=" + postalCode
-				+ ", contactNo=" + contactNo + ", product=" + product + ", category=" + category + "]";
+				+ ", contactNo=" + contactNo +", category=" + category + "]";
 	}
 }
