@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.infogain.app.dto.StoreDto;
 import com.infogain.app.entity.Store;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IStoreRepo;
@@ -27,7 +28,7 @@ public class StoreController {
 	IStoreRepo storeRepo;
 	
 	@PostMapping("/store")
-	public Store insertStore(@RequestBody Store store) throws CustomException {
+	public Store insertStore(@RequestBody StoreDto store) throws CustomException {
 		return storeService.insertStore(store);
 	}
 	

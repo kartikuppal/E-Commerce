@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.entity.Product;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IProductRepo;
-import com.infogain.app.service.ProductException;
 import com.infogain.app.service.ProductService;
 
 
@@ -24,6 +24,7 @@ public class ProductController {
 
 	@Autowired
 	IProductRepo productRepo;
+	
 	@Autowired
 	ProductService productService;
 	
@@ -40,13 +41,13 @@ public class ProductController {
 	}
 
 	@PostMapping("/product")
-	public Product productInsert(@RequestBody Product product) throws ProductException {
+	public Product productInsert(@RequestBody Product product) throws CustomException {
 		return productService.insertProduct(product);
 
 	}
 
 	@PutMapping("/product/{id}")
-	public Product updateProduct(@RequestBody Product product, @PathVariable(value = "id") Integer productId) throws ProductException {
+	public Product updateProduct(@RequestBody Product product, @PathVariable(value = "id") Integer productId) throws CustomException {
 		return productService.updateProduct(product, productId);
 
 	}

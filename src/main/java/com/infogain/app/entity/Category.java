@@ -29,7 +29,7 @@ public class Category {
 	@NotNull
 	@Column(length=255)
 	String description;
-	
+
 	@OneToMany(fetch=FetchType.EAGER)
 	List<Product> product = new ArrayList<>();
 	

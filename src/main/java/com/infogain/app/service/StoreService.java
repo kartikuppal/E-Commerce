@@ -1,43 +1,67 @@
 package com.infogain.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.infogain.app.dto.StoreDto;
+import com.infogain.app.entity.Product;
 import com.infogain.app.entity.Store;
 import com.infogain.app.exception.CustomException;
+import com.infogain.app.repository.IProductRepo;
 import com.infogain.app.repository.IStoreRepo;
 
 @Service
 public class StoreService implements IStoreService {
 	@Autowired
-	IStoreRepo storeRepo;
+	private IStoreRepo storeRepo;
+	@Autowired
+	private IProductRepo productRepo;
 
-	/* inserting values */
-
-
-	public Store insertStore(Store store) throws CustomException {
-		Store existingContactNo = storeRepo.findByContactNo(store.getContactNo());
-
-		if (existingContactNo == null) {
-
-			Integer addressLength = store.getAddress().length();
-			Integer postalCodeLength = store.getPostalCode().toString().length();
-			Integer contactNoLength = store.getContactNo().toString().length();
-
-			if (addressLength > 10) {
-				if (postalCodeLength == 6) {
-					if (contactNoLength == 10) {
-						store.setName(store.getName());
-						store.setAddress(store.getAddress());
-						store.setPostalCode(store.getPostalCode());
-						store.setContactNo(store.getContactNo());
+	/*inserting values*/
+	
+	public Store insertStore(@RequestBody StoreDto storeDto) throws CustomException {
+		
+		Store store = new Store();
+		
+		Store existingContactNo = storeRepo.findByContactNo(storeDto.getContactNo());
+		
+		if(existingContactNo == null) {
+			
+			Integer addressLength = storeDto.getAddress().length();
+			Integer postalCodeLength = storeDto.getPostalCode().toString().length();
+			Integer contactNoLength = storeDto.getContactNo().toString().length();
+			
+			if( addressLength > 10) {
+				if( postalCodeLength == 6) {
+					if( contactNoLength == 10) {
+						store.setName(storeDto.getName());
+						store.setAddress(storeDto.getAddress());
+						store.setPostalCode(storeDto.getPostalCode());
+						store.setContactNo(storeDto.getContactNo());
 
 						
 						/*adding products in store*/
 						
+						//List <Product> product = 
 						//store.getProduct().forEach((product)->{product.setStore((List<Store>) store);});
+						
+						List<Product> productList = new ArrayList<>();
+						
+						for (int i = 0; i < storeDto.getProductId().size(); i++) {
+							Integer productId = storeDto.getProductId().get(i);
+							 Product product = productRepo.findById(productId).get();
+							 productList.add(product);
+							 
+							 /*System.out.println(roleID+"id");
+							 System.out.println(roles+"aaaa");
+							 System.out.println(user+"bbbb");*/
+							 
+							 }
+						store.setProduct(productList);
 					}
 				
 
