@@ -48,9 +48,6 @@ public class Product {
 	@ManyToMany(mappedBy = "product")
 	List<Store> store = new ArrayList<>();
 
-	@ManyToMany(mappedBy = "product")
-	List<Category> category = new ArrayList<>();
-
 	@ManyToMany
 	List<Brand> brand = new ArrayList<>();
 
@@ -118,13 +115,6 @@ public class Product {
 		this.store = store;
 	}
 
-	public List<Category> getCategory() {
-		return category;
-	}
-
-	public void setCategory(List<Category> category) {
-		this.category = category;
-	}
 
 	public List<Brand> getBrand() {
 		return brand;
@@ -140,7 +130,7 @@ public class Product {
 	}
 
 	public Product(Integer id, String name, Double price, Date manufacturingDate, Float weight, String size,
-			Byte rating, List<Store> store, List<Category> category, List<Brand> brand) {
+			Byte rating, List<Store> store, List<Brand> brand) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -150,15 +140,14 @@ public class Product {
 		this.size = size;
 		this.rating = rating;
 		this.store = store;
-		this.category = category;
+		
 		this.brand = brand;
 	}
 
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", manufacturingDate=" + manufacturingDate
-				+ ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", store=" + store + ", category="
-				+ category + ", brand=" + brand + "]";
+				+ ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", store=" + store + ", brand=" + brand + "]";
 	}
 
 }

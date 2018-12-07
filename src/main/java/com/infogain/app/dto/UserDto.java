@@ -11,14 +11,16 @@ public class UserDto {
 	private String address;
 	private Integer postalCode;
 	private BigInteger mobileNumber;
-	private List<Integer> storeIds;
+	private Byte status;
+	private List<Integer> storeId;
 
 	public UserDto() {
 
 	}
 
+	
 	public UserDto(Integer id, String password, String name, String email, String address, Integer postalCode,
-			BigInteger mobileNumber, List<Integer> storeIds) {
+			BigInteger mobileNumber, Byte status, List<Integer> storeId) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -27,8 +29,10 @@ public class UserDto {
 		this.address = address;
 		this.postalCode = postalCode;
 		this.mobileNumber = mobileNumber;
-		this.storeIds = storeIds;
+		this.status = status;
+		this.storeId = storeId;
 	}
+
 
 	public Integer getId() {
 		return id;
@@ -85,20 +89,34 @@ public class UserDto {
 	public void setMobileNumber(BigInteger mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
+	
 
-	public List<Integer> getStoreIds() {
-		return storeIds;
+	public Byte getStatus() {
+		return status;
 	}
 
-	public void setStoreIds(List<Integer> storeIds) {
-		this.storeIds = storeIds;
+
+	public void setStatus(Byte status) {
+		this.status = status;
 	}
+
+
+	public List<Integer> getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(List<Integer> storeId) {
+		this.storeId = storeId;
+	}
+
 
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
-				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", storeIds=" + storeIds
-				+ "]";
+				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
+				+ ", storeId=" + storeId + "]";
 	}
+
+	
 
 }
