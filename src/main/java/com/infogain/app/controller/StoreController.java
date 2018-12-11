@@ -28,25 +28,25 @@ public class StoreController {
 	IStoreRepo storeRepo;
 	
 	@PostMapping("/store")
-	public Store insertStore(@RequestBody StoreDto store) throws CustomException {
-		return storeService.insertStore(store);
+	public StoreDto insertStore(@RequestBody StoreDto storeDto) throws CustomException {
+		return storeService.insertStore(storeDto);
 	}
 	
 	@GetMapping("/store")
-	public List<Store> displayAllStores() {
-		return storeService.displayStore();
+	public List<StoreDto> displayAllStores(@RequestBody StoreDto storeDto) {
+		return storeService.displayAllStore();
 	}
 	
 	@GetMapping("/store/{id}")
-	public Store displayStoreById(@PathVariable(value = "id") Integer storeId) {
+	public StoreDto displayStoreById(@PathVariable(value = "id") Integer storeId) {
 		return storeService.displayStoreById(storeId);
 	}
 	
-	@PutMapping("/store/{id}")
-	public Store updateStore(@RequestBody Store store, @PathVariable(value = "id") Integer storeId) throws CustomException {
-		return storeService.updateStore(store, storeId);
+	@PutMapping("/store")
+	public StoreDto updateStore(@RequestBody StoreDto storeDto, Integer storeId) throws CustomException {
+		return storeService.updateStore(storeDto, storeId);
 	}
-
+	
 	@DeleteMapping("/store/{id}")
 	public void deleteStore(@PathVariable(value = "id") Integer storeId) {
 		storeService.deleteStore(storeId);

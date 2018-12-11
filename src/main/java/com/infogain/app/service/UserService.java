@@ -42,7 +42,6 @@ public class UserService implements IUserService {
 			user.setId(userDto.getId());
 		}
 		user.setAddress(userDto.getAddress());
-
 		user.setEmail(userDto.getEmail());
 		user.setMobileNumber(userDto.getMobileNumber());
 		user.setPassword(userDto.getPassword());
@@ -62,7 +61,6 @@ public class UserService implements IUserService {
 			throw new CustomException("Email does not exist");
 		}
 		else{
-		System.out.println(userName);
 		if (userName.equals(user.getEmail()) && password.equals(user.getPassword())) {
 			loginSuccess = true;
 			System.out.println("in login servie");

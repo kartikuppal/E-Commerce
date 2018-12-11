@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.infogain.app.dto.StoreDto;
-import com.infogain.app.entity.Product;
 import com.infogain.app.entity.Store;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IProductRepo;
@@ -18,19 +17,49 @@ import com.infogain.app.repository.IStoreRepo;
 public class StoreService implements IStoreService {
 	@Autowired
 	private IStoreRepo storeRepo;
-	@Autowired
-	private IProductRepo productRepo;
+	
+	public StoreDto EntityToDtoAssembler(Store store) {
+		
+		StoreDto storeDto = new StoreDto();
+		storeDto.setId(store.getId());
+		storeDto.setName(store.getName());
+		storeDto.setAddress(store.getAddress());
+		storeDto.setPostalCode(store.getPostalCode());
+		storeDto.setContactNo(store.getContactNo());
+
+		return storeDto;
+	}
+	
+	public Store dtoToEntityAssembler(StoreDto storeDto) {
+
+		Store store = new Store();
+		store.setId(storeDto.getId());
+		store.setName(storeDto.getName());
+		store.setAddress(storeDto.getAddress());
+		store.setPostalCode(storeDto.getPostalCode());
+		store.setContactNo(storeDto.getContactNo());
+
+		return store;
+	}
 
 	/*inserting values*/
 	
-	public Store insertStore(@RequestBody StoreDto storeDto) throws CustomException {
+	/*public StoreDto insertStore(@RequestBody StoreDto storeDto) throws CustomException {
+		Store store = new Store();
 		
+		store = dtoToEntityAssembler(storeDto);
+		
+		storeRepo.save(store);
+		
+		return storeDto;
+	}*/
+	
+	public StoreDto insertStore(@RequestBody StoreDto storeDto) throws CustomException {
 		Store store = new Store();
 		
 		Store existingContactNo = storeRepo.findByContactNo(storeDto.getContactNo());
 		
 		if(existingContactNo == null) {
-			
 			Integer addressLength = storeDto.getAddress().length();
 			Integer postalCodeLength = storeDto.getPostalCode().toString().length();
 			Integer contactNoLength = storeDto.getContactNo().toString().length();
@@ -38,86 +67,71 @@ public class StoreService implements IStoreService {
 			if( addressLength > 10) {
 				if( postalCodeLength == 6) {
 					if( contactNoLength == 10) {
-						store.setName(storeDto.getName());
-						store.setAddress(storeDto.getAddress());
-						store.setPostalCode(storeDto.getPostalCode());
-						store.setContactNo(storeDto.getContactNo());
-
-						
-						/*adding products in store*/
-						
-						//List <Product> product = 
-						//store.getProduct().forEach((product)->{product.setStore((List<Store>) store);});
-						
-						List<Product> productList = new ArrayList<>();
-						
-						for (int i = 0; i < storeDto.getProductId().size(); i++) {
-							Integer productId = storeDto.getProductId().get(i);
-							 Product product = productRepo.findById(productId).get();
-							 productList.add(product);
-							 
-							 /*System.out.println(roleID+"id");
-							 System.out.println(roles+"aaaa");
-							 System.out.println(user+"bbbb");*/
-							 
-							 }
-						store.setProduct(productList);
-					}
-				
-
-					else {
-
+						store = dtoToEntityAssembler(storeDto);
+					} else {
 						throw new CustomException("Contact number must be of length 10");
-					}
+						}
 				} else {
 					throw new CustomException("Postal Code must be of length 6");
-				
-			} }
-				else {
+					}
+			} else {
 				throw new CustomException("Address size must be greater than 10");
-			}}
-		 else {
-
-			throw new CustomException("Store with this contact number already exists");
-		}
-		return storeRepo.save(store);
+				}
+			} else {
+				throw new CustomException("Store with this contact number already exists");
+				}
+		
+		storeRepo.save(store);
+		
+		return storeDto;
 	}
-
-	/* displaying values */
-
-	public List<Store> displayStore() {
-		return storeRepo.findAll();
+	
+	public List<StoreDto> displayAllStore() {
+		
+		List<Store> storeList = storeRepo.findAll();
+		
+		List<StoreDto> storeDtoList = new ArrayList<>();
+		
+		for(Store store: storeList) {
+			StoreDto storeDto;
+			
+			storeDto = EntityToDtoAssembler(store);
+			
+			storeDtoList.add(storeDto);
+		}
+		return storeDtoList;
 	}
 
 	/* displaying values by id */
 
-	public Store displayStoreById(Integer id) {
+	public StoreDto displayStoreById(Integer id) {
 		Store store = storeRepo.findById(id).get();
-		return store;
-
+		
+		StoreDto storeDto;
+		
+		storeDto = EntityToDtoAssembler(store);
+		
+		return storeDto;
 	}
 
 	/* updating values by id */
 
-	public Store updateStore(Store updatedStore, Integer id) throws CustomException {
-
+	public StoreDto updateStore(@RequestBody StoreDto storeDto, Integer id) throws CustomException {
+		id = storeDto.getId();
 		Store store = storeRepo.findById(id).get();
 
-		Store ContactNo = storeRepo.findByContactNo(updatedStore.getContactNo());
+		Store ContactNo = storeRepo.findByContactNo(storeDto.getContactNo());
 
 		if (ContactNo == null) {
 
-			Integer addressLength = updatedStore.getAddress().length();
-			Integer postalCodeLength = updatedStore.getPostalCode().toString().length();
-			Integer contactNoLength = updatedStore.getContactNo().toString().length();
+			Integer addressLength = storeDto.getAddress().length();
+			Integer postalCodeLength = storeDto.getPostalCode().toString().length();
+			Integer contactNoLength = storeDto.getContactNo().toString().length();
 
 			if (addressLength > 10) {
 				if (postalCodeLength == 6) {
 					if (contactNoLength == 10) {
-						store.setName(updatedStore.getName());
-						store.setAddress(updatedStore.getAddress());
-						store.setPostalCode(updatedStore.getPostalCode());
-						store.setContactNo(updatedStore.getContactNo());
+						store = dtoToEntityAssembler(storeDto);
 					} else {
 						throw new CustomException("Contact number must be of length 10");
 					}
@@ -133,7 +147,7 @@ public class StoreService implements IStoreService {
 		}
 		store = storeRepo.save(store);
 
-		return store;
+		return storeDto;
 	}
 
 	/* deleting values by id */

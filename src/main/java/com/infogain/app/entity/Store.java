@@ -22,30 +22,16 @@ import org.springframework.stereotype.Component;
 @Entity
 public class Store {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(length=5)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@NotNull(message="Name cannot be null")
-	//@Size(min=2, max=50)
-	@Column(length=50)
 	private String name;
 	
-	@NotNull(message="Address cannot be blank")
-	//@Size(min=10,max=255)
-	@Column(length=255)
 	private String address;
 	
-	@NotNull
-	//@Size(min=6,max=6)
-	@Column(length=6)
 	private Integer postalCode;
 	
-	@NotNull
-	//@Size(min=10,max=10)
-	@Column(unique=true,length=10)
 	private BigInteger contactNo;
-
 
 	@ManyToMany(fetch=FetchType.EAGER)
 	List<Product> product = new ArrayList<>();
