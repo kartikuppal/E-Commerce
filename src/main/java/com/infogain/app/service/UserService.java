@@ -61,6 +61,7 @@ public class UserService implements IUserService {
 			throw new CustomException("Email does not exist");
 		}
 		else{
+
 		if (userName.equals(user.getEmail()) && password.equals(user.getPassword())) {
 			loginSuccess = true;
 			System.out.println("in login servie");
