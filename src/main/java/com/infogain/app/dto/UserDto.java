@@ -3,24 +3,63 @@ package com.infogain.app.dto;
 import java.math.BigInteger;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.infogain.app.entity.Store;
+
 public class UserDto {
+	@Column(length=5)
 	private Integer id;
+	
+	@NotNull(message="Password cannot be null")
+	@Column(length=15)
 	private String password;
+	
+	@NotNull(message="Name cannot be null")
+	@Size(min=2, max=50)
+	@Column(length=50)
 	private String name;
+	
+	@NotNull(message="Email cannot be null")
+	@Column(unique=true,length=60)
 	private String email;
+	
+	@NotNull(message="Address cannot be blank")
+	@Column(length=255)
 	private String address;
+	
+	@NotNull(message="PostalCode cannot be null")
+	@Size(min=6,max=6)
+	@Column(length=6)
 	private Integer postalCode;
+	
+	@NotNull(message="Mobile Number cannot be null")
+	@Size(min=10,max=10)
+	@Column(length=10)
 	private BigInteger mobileNumber;
+	
+	@NotNull(message="status cannot be null")
+	@Column(length=1)
 	private Byte status;
-	private List<Integer> storeId;
+	
+	private List<Store> store;
 
 	public UserDto() {
 
 	}
 
 	
-	public UserDto(Integer id, String password, String name, String email, String address, Integer postalCode,
-			BigInteger mobileNumber, Byte status, List<Integer> storeId) {
+	
+
+	public UserDto(Integer id, @NotNull(message = "Password cannot be null") String password,
+			@NotNull(message = "Name cannot be null") @Size(min = 2, max = 50) String name,
+			@NotNull(message = "Email cannot be null") String email,
+			@NotNull(message = "Address cannot be blank") String address,
+			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) Integer postalCode,
+			@NotNull(message = "Mobile Number cannot be null") @Size(min = 10, max = 10) BigInteger mobileNumber,
+			@NotNull(message = "status cannot be null") Byte status, List<Store> store) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -30,8 +69,10 @@ public class UserDto {
 		this.postalCode = postalCode;
 		this.mobileNumber = mobileNumber;
 		this.status = status;
-		this.storeId = storeId;
+		this.store = store;
 	}
+
+
 
 
 	public Integer getId() {
@@ -101,22 +142,33 @@ public class UserDto {
 	}
 
 
-	public List<Integer> getStoreId() {
-		return storeId;
+	
+
+	public List<Store> getStore() {
+		return store;
 	}
 
-	public void setStoreId(List<Integer> storeId) {
-		this.storeId = storeId;
+
+
+
+	public void setStore(List<Store> store) {
+		this.store = store;
 	}
+
+
 
 
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
-				+ ", storeId=" + storeId + "]";
+				+ ", store=" + store + "]";
 	}
 
+
+
+
+	
 	
 
 }

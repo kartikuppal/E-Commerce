@@ -33,7 +33,7 @@ public class StoreController {
 	}
 	
 	@GetMapping("/store")
-	public List<Store> displayAllStores(@RequestBody Store store) {
+	public List<Store> displayAllStores() {
 		return storeService.displayStore();
 	}
 	

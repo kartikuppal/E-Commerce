@@ -15,6 +15,8 @@ public class ProductService implements IProductService{
 	@Autowired
 	IProductRepo productRepo;
 	
+	
+	
 	@Override
 	public List<Product> displayAllProduct() {
 		List<Product> product = productRepo.findAll();

@@ -31,7 +31,7 @@ public class UserController {
 	IUserRepo userRepo;
   
 	
-	@RequestMapping("/login")
+	/*@RequestMapping("/login")
 	public User loginUser(@RequestHeader(value = "UserName") String userName,
 			@RequestHeader(value = "Password") String password) throws CustomException {
 		Boolean flag = userService.loginUser(userName, password);
@@ -43,36 +43,70 @@ public class UserController {
 		System.out.println(user);
 		return user;
 		
-	}
-
-	@GetMapping("/user")
-	public List<User> displayAllUsers(@RequestBody User user) {
-		return userService.displayAllUsers();
-
-	}
-
-	@GetMapping("/user/{id}")
-	public User displayUserById(@PathVariable(value = "id") Integer userId) {
-		return userService.displayUserById(userId);
-
-	}
-
-	@PostMapping("/user")
-	public User userInsert(@RequestBody UserDto userDto) throws CustomException {
+	}*/
+/*	
+	@PostMapping("/login")
+	public Boolean loginUser(@RequestBody UserDto userDto) throws CustomException
+	{
+		String userName = userDto.getEmail();
+		String password = userDto.getPassword();
+		Boolean loginSuccess = userService.loginUser(userName, password);
+		return loginSuccess;
 		
-		return userService.insertUserDto(userDto);
+	}*/
+	
+
+/*	@RequestMapping("/login")
+	public Boolean loginUser(@RequestHeader(value = "UserName") String userName,
+			@RequestHeader(value = "Password") String password) throws CustomException {
+		Boolean loginSuccess = userService.loginUser(userName, password);
+		return loginSuccess;
+		
+	}*/
+	
+	@GetMapping("/user")
+	public List<UserDto> displayAllUsers() {
+		return userService.getAllUsers();
 
 	}
-
-	@PutMapping("/user/{id}")
-	public User updateUser(@RequestBody User user, @PathVariable(value = "id") Integer userId) throws CustomException {
-		return userService.updateUser(user, userId);
+	
+	@GetMapping("/user/{id}")
+	public UserDto getUserById(@PathVariable(value = "id") Integer userId) {
+		return userService.getUserById(userId);
 
 	}
-
+	
+	@PostMapping("/user")
+	public UserDto userInsert(@RequestBody UserDto userDto) throws CustomException {
+		
+		return userService.insertUser(userDto);
+	}
+	
+	@PutMapping("/user")
+	public UserDto updateUser(@RequestBody UserDto userDto, @RequestHeader(value = "userName") String userName,
+			@RequestHeader(value = "password") String password) throws CustomException {
+		Boolean loginSuccess = userService.loginUser(userName, password);
+		if(loginSuccess==true){
+		userDto= userService.updateUser(userDto);
+		}
+		else
+		{
+			throw new CustomException("login unsuccessfull");
+		}
+		return userDto;
+	}
+	
 	@DeleteMapping("/user/{id}")
 	public void deleteUser(@PathVariable(value = "id") Integer userId) {
 		userService.deleteUser(userId);
 	}
 
+	/*
+
+	
+
+
+
+
+*/
 }
