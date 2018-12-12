@@ -38,6 +38,7 @@ public class ProductDto {
 	
 	private List<Category> category;
 	private List<Brand> brand;
+	
 	public ProductDto() {
 		super();
 		// TODO Auto-generated constructor stub

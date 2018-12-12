@@ -1,37 +1,24 @@
 package com.infogain.app.entity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.stereotype.Component;
 
 @Entity
 public class Store {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
 	private String name;
-	
 	private String address;
-	
-	private Integer postalCode;
-	
-	private BigInteger contactNo;
+	private String postalCode;
+	private String contactNo;
 
 	@ManyToMany(fetch=FetchType.EAGER)
 	List<Product> product = new ArrayList<>();
@@ -43,10 +30,8 @@ public class Store {
 		super();
 	}
 
-	public Store(Integer id, @NotNull(message = "Name cannot be null") @Size(min = 2, max = 50) String name,
-			@NotNull(message = "Address cannot be blank") @Size(min = 10, max = 255) String address,
-			@NotNull @Size(min = 6, max = 6) Integer postalCode,
-			@NotNull @Size(min = 10, max = 10) BigInteger contactNo, List<Product> product, List<Category> category) {
+	public Store(Integer id, String name, String address, String postalCode, String contactNo, List<Product> product,
+			List<Category> category) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -81,19 +66,19 @@ public class Store {
 		this.address = address;
 	}
 
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 
-	public BigInteger getContactNo() {
+	public String getContactNo() {
 		return contactNo;
 	}
 
-	public void setContactNo(BigInteger contactNo) {
+	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
 

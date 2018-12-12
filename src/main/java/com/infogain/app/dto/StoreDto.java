@@ -1,43 +1,28 @@
 package com.infogain.app.dto;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class StoreDto {
-	@Column(length=5)
-	@NotNull(message = "Id cannot be null")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
 	@NotNull(message="Name cannot be null")
 	@Size(min=2, max=50)
-	@Column(length=50)
 	private String name;
 	
 	@NotNull(message="Address cannot be blank")
 	@Size(min=10,max=255)
-	@Column(length=255)
 	private String address;
 	
-	@NotNull(message="code cannot be null")
-	//@Size(min=5,max=6,message = "size must be 6")
-	@Column(length=6)
-	@Min(6)
-	@Max(6)
-	private Integer postalCode;
+	@NotNull(message="postal Code cannot be null")
+	@Pattern(regexp="(^[0-9]{6}$)|(^$)", message="Invalid postal Code format")
+	private String postalCode;
 	
-	@NotNull(message="number cannot be null")
-	@Min(10)
-	@Max(10)
-	@Column(unique=true)
-	private BigInteger contactNo;
+	@NotNull(message="contact number cannot be null")
+	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
+	private String contactNo;
 	
 	/*private List<Integer> productId;
 	
@@ -46,7 +31,7 @@ public class StoreDto {
 	public StoreDto() {
 		super();
 	}
-	public StoreDto(Integer id, String name, String address, Integer postalCode, BigInteger contactNo) {
+	public StoreDto(Integer id, String name, String address, String postalCode, String contactNo) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -73,16 +58,16 @@ public class StoreDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	public BigInteger getContactNo() {
+	public String getContactNo() {
 		return contactNo;
 	}
-	public void setContactNo(BigInteger contactNo) {
+	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
 	

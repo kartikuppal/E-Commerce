@@ -1,10 +1,6 @@
 package com.infogain.app.service;
 
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -19,7 +15,6 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.infogain.app.dto.UserDto;
-import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IStoreRepo;

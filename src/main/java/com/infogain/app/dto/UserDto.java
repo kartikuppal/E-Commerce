@@ -1,62 +1,58 @@
 package com.infogain.app.dto;
+
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.infogain.app.entity.Store;
 
 public class UserDto {
-	@Column(length=5)
 	private Integer id;
 	
 	@NotNull(message="Password cannot be null")
-	@Column(length=15)
 	private String password;
 	
 	@NotNull(message="Name cannot be null")
 	@Size(min=2, max=50)
-	@Column(length=50)
 	private String name;
 	
-	@NotNull(message="Email cannot be null")
-	@Column(unique=true,length=60)
+	@NotNull(message="email cannot be null")
+	@Email(message = "email should be in correct format")
+	@Size(min=2, max=50)
 	private String email;
 	
 	@NotNull(message="Address cannot be blank")
-	@Column(length=255)
+	@Size(min=10,max=255)
 	private String address;
 	
 	@NotNull(message="PostalCode cannot be null")
 	@Size(min=6,max=6)
 	@Column(length=6)
+	@Pattern(regexp="(^[0-9]{6}$)|(^$)", message="Invalid postal Code format")
 	private String postalCode;
 	
-	@NotNull(message="Mobile Number cannot be null")
-	@Size(min=10,max=10)
-	@Column(length=10)
+	@NotNull(message="Mobile number cannot be null")
+	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String mobileNumber;
 	
 	@NotNull(message="status cannot be null")
-	@Column(length=1)
 	private Byte status;
 	
 	private List<Store> store;
 
 	public UserDto() {
-
 	}
-
 	
-	
-
 	public UserDto(Integer id, @NotNull(message = "Password cannot be null") String password,
 			@NotNull(message = "Name cannot be null") @Size(min = 2, max = 50) String name,
-			@NotNull(message = "Email cannot be null") String email,
-			@NotNull(message = "Address cannot be blank") String address,
-			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) String postalCode,
-			@NotNull(message = "Mobile Number cannot be null") @Size(min = 10, max = 10) String mobileNumber,
+			@NotNull(message = "email cannot be null") @Email(message = "email should be in correct format") @Size(min = 2, max = 50) String email,
+			@NotNull(message = "Address cannot be blank") @Size(min = 10, max = 255) String address,
+			@NotNull(message = "postal Code cannot be null") @Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format") String postalCode,
+			@NotNull(message = "Mobile number cannot be null") @Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format") String mobileNumber,
 			@NotNull(message = "status cannot be null") Byte status, List<Store> store) {
 		super();
 		this.id = id;
@@ -69,9 +65,6 @@ public class UserDto {
 		this.status = status;
 		this.store = store;
 	}
-
-
-
 
 	public Integer getId() {
 		return id;
@@ -129,32 +122,21 @@ public class UserDto {
 		this.mobileNumber = mobileNumber;
 	}
 	
-
 	public Byte getStatus() {
 		return status;
 	}
-
 
 	public void setStatus(Byte status) {
 		this.status = status;
 	}
 
-
-	
-
 	public List<Store> getStore() {
 		return store;
 	}
 
-
-
-
 	public void setStore(List<Store> store) {
 		this.store = store;
 	}
-
-
-
 
 	@Override
 	public String toString() {
@@ -162,11 +144,4 @@ public class UserDto {
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
 				+ ", store=" + store + "]";
 	}
-
-
-
-
-	
-	
-
 }

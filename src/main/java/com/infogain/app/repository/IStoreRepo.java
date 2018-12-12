@@ -10,7 +10,7 @@ import com.infogain.app.entity.Store;
 
 public interface IStoreRepo extends JpaRepository<Store, Integer>{
 
-	public Store findByContactNo(BigInteger contactNo);
+	public Store findByContactNo(String contactNo);
 	public List<Store> findAllByIdIn(List<Integer> ids);
 	//public List<Store> findAllByStoreId(List<Integer> storeId);
 
