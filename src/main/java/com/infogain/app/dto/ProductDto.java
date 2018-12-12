@@ -4,22 +4,47 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+
+import com.infogain.app.entity.Brand;
+import com.infogain.app.entity.Category;
+
 public class ProductDto {
+	
+	@Column(length=10)
 	private Integer id;
+
+	@NotNull(message="Name cannot be null")
+	@Column(length=50)
 	private String name;
+
+	@NotNull(message="Price cannot be Negati")
+	@Column(length=12)
 	private Double price;
+	
+	@NotNull
 	private Date manufacturingDate;
+	
+	@NotNull
+	@Column(length=8)
 	private Float weight;
+	
+	@Column(length=16)
 	private String size;
+	
+	@Column(length=2)
 	private Byte rating;
-	List<Integer> store = new ArrayList<>();
-	List<Integer> category = new ArrayList<>();
-	List<Integer> brand = new ArrayList<>();
+	
+	private List<Category> category;
+	private List<Brand> brand;
 	public ProductDto() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public ProductDto(Integer id, String name, Double price, Date manufacturingDate, Float weight, String size,
-			Byte rating, List<Integer> store, List<Integer> category, List<Integer> brand) {
+	public ProductDto(Integer id, @NotNull(message = "Name cannot be null") String name,
+			@NotNull(message = "Price cannot be Negati") Double price, @NotNull Date manufacturingDate,
+			@NotNull Float weight, String size, Byte rating, List<Category> category, List<Brand> brand) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -28,7 +53,6 @@ public class ProductDto {
 		this.weight = weight;
 		this.size = size;
 		this.rating = rating;
-		this.store = store;
 		this.category = category;
 		this.brand = brand;
 	}
@@ -74,28 +98,25 @@ public class ProductDto {
 	public void setRating(Byte rating) {
 		this.rating = rating;
 	}
-	public List<Integer> getStore() {
-		return store;
-	}
-	public void setStore(List<Integer> store) {
-		this.store = store;
-	}
-	public List<Integer> getCategory() {
+	public List<Category> getCategory() {
 		return category;
 	}
-	public void setCategory(List<Integer> category) {
+	public void setCategory(List<Category> category) {
 		this.category = category;
 	}
-	public List<Integer> getBrand() {
+	public List<Brand> getBrand() {
 		return brand;
 	}
-	public void setBrand(List<Integer> brand) {
+	public void setBrand(List<Brand> brand) {
 		this.brand = brand;
 	}
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", manufacturingDate="
-				+ manufacturingDate + ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", store="
-				+ store + ", category=" + category + ", brand=" + brand + "]";
+				+ manufacturingDate + ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", category="
+				+ category + ", brand=" + brand + "]";
 	}
+	
+	
+	
 }

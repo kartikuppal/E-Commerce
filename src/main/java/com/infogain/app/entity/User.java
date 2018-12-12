@@ -1,6 +1,5 @@
 package com.infogain.app.entity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ArrayList;
@@ -28,14 +27,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(length=5)
 	private Integer id;
 	private String password;
 	private String name;
 	private String email;
 	private String address;
-	private Integer postalCode;
-	private BigInteger mobileNumber;
+	private String postalCode;
+	private String mobileNumber;
 	private Byte status;
 
 	@OneToMany(fetch = FetchType.EAGER)
@@ -49,8 +47,8 @@ public class User {
 			@NotNull(message = "Name cannot be null") @Size(min = 2, max = 50) String name,
 			@NotNull(message = "Email cannot be null") String email,
 			@NotNull(message = "Address cannot be blank") String address,
-			@NotNull(message = "PostalCode cannot be null") Integer postalCode,
-			@NotNull(message = "Mobile Number cannot be null") BigInteger mobileNumber,
+			@NotNull(message = "PostalCode cannot be null") String postalCode,
+			@NotNull(message = "Mobile Number cannot be null") String mobileNumber,
 			@NotNull(message = "status cannot be null") Byte status, List<Store> store) {
 		super();
 		this.id = id;
@@ -104,19 +102,19 @@ public class User {
 		this.address = address;
 	}
 
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 
-	public BigInteger getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(BigInteger mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

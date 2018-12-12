@@ -25,28 +25,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(length=10,columnDefinition="Integer(5) default 0")
-	private Integer id=1;
-	
-	@NotNull(message="Name cannot be null")
-	@Column(length=50)
+	private Integer id;
 	private String name;
-	
-	@NotNull(message="Price cannot be Negati")
-	@Column(length=12)
 	private Double price;
-	
-	@NotNull
 	private Date manufacturingDate;
-	
-	@NotNull
-	@Column(length=8)
 	private Float weight;
-	
-	@Column(length=16)
 	private String size;
-	
-	@Column(length=2)
 	private Byte rating;
 
 	@ManyToMany(mappedBy = "product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)

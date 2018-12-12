@@ -1,6 +1,4 @@
 package com.infogain.app.dto;
-
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,12 +31,12 @@ public class UserDto {
 	@NotNull(message="PostalCode cannot be null")
 	@Size(min=6,max=6)
 	@Column(length=6)
-	private Integer postalCode;
+	private String postalCode;
 	
 	@NotNull(message="Mobile Number cannot be null")
 	@Size(min=10,max=10)
 	@Column(length=10)
-	private BigInteger mobileNumber;
+	private String mobileNumber;
 	
 	@NotNull(message="status cannot be null")
 	@Column(length=1)
@@ -57,8 +55,8 @@ public class UserDto {
 			@NotNull(message = "Name cannot be null") @Size(min = 2, max = 50) String name,
 			@NotNull(message = "Email cannot be null") String email,
 			@NotNull(message = "Address cannot be blank") String address,
-			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) Integer postalCode,
-			@NotNull(message = "Mobile Number cannot be null") @Size(min = 10, max = 10) BigInteger mobileNumber,
+			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) String postalCode,
+			@NotNull(message = "Mobile Number cannot be null") @Size(min = 10, max = 10) String mobileNumber,
 			@NotNull(message = "status cannot be null") Byte status, List<Store> store) {
 		super();
 		this.id = id;
@@ -115,19 +113,19 @@ public class UserDto {
 		this.address = address;
 	}
 
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 
-	public BigInteger getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(BigInteger mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 	

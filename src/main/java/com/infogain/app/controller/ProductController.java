@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.infogain.app.dto.ProductDto;
 import com.infogain.app.entity.Product;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.repository.IProductRepo;
 import com.infogain.app.service.ProductService;
-
 
 @RestController
 @RequestMapping("/api")
@@ -24,31 +24,32 @@ public class ProductController {
 
 	@Autowired
 	IProductRepo productRepo;
-	
+
 	@Autowired
 	ProductService productService;
-	
+
 	@GetMapping("/product")
-	public List<Product> displayAllProducts(@RequestBody Product product) {
+	public List<ProductDto> displayAllProducts(@RequestBody ProductDto productDto) {
 		return productService.displayAllProduct();
 
 	}
 
 	@GetMapping("/product/{id}")
-	public Product displayUserById(@PathVariable(value = "id") Integer productId) {
+	public ProductDto displayUserById(@PathVariable(value = "id") Integer productId) {
 		return productService.displayProductById(productId);
 
 	}
 
 	@PostMapping("/product")
-	public Product productInsert(@RequestBody Product product) throws CustomException {
-		return productService.insertProduct(product);
+	public ProductDto productInsert(@RequestBody ProductDto productDto) throws CustomException {
+		return productService.insertProduct(productDto);
 
 	}
 
 	@PutMapping("/product/{id}")
-	public Product updateProduct(@RequestBody Product product, @PathVariable(value = "id") Integer productId) throws CustomException {
-		return productService.updateProduct(product, productId);
+	public ProductDto updateProduct(@RequestBody ProductDto productDto, @PathVariable(value = "id") Integer productId)
+			throws CustomException {
+		return productService.updateProduct(productDto, productId);
 
 	}
 
@@ -57,5 +58,4 @@ public class ProductController {
 		productService.deleteProduct(productId);
 	}
 
-	
 }
