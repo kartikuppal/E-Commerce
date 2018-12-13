@@ -45,8 +45,8 @@ public class StoreController {
 	}
 	
 	@PutMapping("/store")
-	public StoreDto updateStore(@RequestBody StoreDto storeDto, Integer storeId) throws CustomException {
-		return storeService.updateStore(storeDto, storeId);
+	public StoreDto updateStore(@RequestBody StoreDto storeDto) throws CustomException {
+		return storeService.updateStore(storeDto);
 	}
 	
 	@DeleteMapping("/store/{id}")

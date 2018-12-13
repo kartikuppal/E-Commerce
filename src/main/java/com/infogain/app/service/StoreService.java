@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.infogain.app.dto.StoreDto;
 import com.infogain.app.entity.Store;
-import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IStoreRepo;
 
@@ -22,7 +21,6 @@ public class StoreService implements IStoreService {
 	
 	public StoreDto EntityToDtoAssembler(StoreDto storeDto, Store store) {
 		
-		//StoreDto storeDto = new StoreDto();
 		storeDto.setId(store.getId());
 		storeDto.setName(store.getName());
 		storeDto.setAddress(store.getAddress());
@@ -34,7 +32,6 @@ public class StoreService implements IStoreService {
 	
 	public Store dtoToEntityAssembler(StoreDto storeDto, Store store) {
 
-		//Store store = new Store();
 		store.setName(storeDto.getName());
 		store.setAddress(storeDto.getAddress());
 		store.setPostalCode(storeDto.getPostalCode());
@@ -43,17 +40,7 @@ public class StoreService implements IStoreService {
 		return store;
 	}
 
-	/*inserting values*/
-	
-	/*public StoreDto insertStore(@RequestBody StoreDto storeDto) throws CustomException {
-		Store store = new Store();
-		
-		store = dtoToEntityAssembler(storeDto);
-		
-		storeRepo.save(store);
-		
-		return storeDto;
-	}*/
+	/*inserting value*/
 	
 	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException {
 		try {
@@ -82,7 +69,7 @@ public class StoreService implements IStoreService {
 		return storeDtoList;
 	}
 
-	/* displaying values by id */
+	/* displaying value by id */
 
 	public StoreDto displayStoreById(Integer id) {
 		Store store = storeRepo.findById(id).get();
@@ -92,11 +79,11 @@ public class StoreService implements IStoreService {
 		return storeDto;
 	}
 
-	/* updating values by id */
+	/* updating value by id */
 
-	public StoreDto updateStore(@RequestBody StoreDto storeDto, Integer id) throws InvalidInputException {
+	public StoreDto updateStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException {
 		try {
-			id = storeDto.getId();
+			Integer id = storeDto.getId();
 			Store store = storeRepo.findById(id).get();
 			store = dtoToEntityAssembler(storeDto, store);
 			store = storeRepo.save(store);
@@ -106,7 +93,7 @@ public class StoreService implements IStoreService {
 		return storeDto;
 	}
 
-	/* deleting values by id */
+	/* deleting value by id */
 
 	public void deleteStore(Integer id) {
 		storeRepo.deleteById(id);
