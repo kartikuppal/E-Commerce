@@ -31,9 +31,10 @@ public class UserService implements IUserService {
 	public void emailGenerator(String userName, String password) {
 		// smtp.googlemail.com
 		String to = userName/* "receive@abc.om" */; // sender email
-		String from = "kartikuppal25@gmail.com"; // receiver email
+		String from = "kartikuppal26@gmail.com"; // receiver email
 		String host = "smtp.gmail.com"; // mail server host
-
+		String user = "kartikuppal26@gmail.com";
+		String pass = "";
 		Properties properties = System.getProperties();
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.setProperty("mail.smtp.host", host);
