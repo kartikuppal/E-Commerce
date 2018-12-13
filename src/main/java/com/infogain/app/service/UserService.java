@@ -12,12 +12,16 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.infogain.app.dto.UserDto;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
+import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IStoreRepo;
 import com.infogain.app.repository.IUserRepo;
 
@@ -32,8 +36,8 @@ public class UserService implements IUserService {
 	public void emailGenerator(String userName, String password, String name) {
 		String to = userName/* "receive@abc.om" */; // sender email
 		String from = "e.commerce0005@gmail.com"; // receiver email
-		String host = "smtp.gmail.com"; // mail server host
 		String pass = "ecom@1234";
+		String host = "smtp.gmail.com"; // mail server host
 		Properties properties = System.getProperties();
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.setProperty("mail.smtp.host", host);
@@ -46,7 +50,7 @@ public class UserService implements IUserService {
 		});
 		try {
 			MimeMessage message = new MimeMessage(session); // email message
-			message.setFrom("ECommerce"); // setting header fields
+			message.setFrom("E-Commerce_Application"); // setting header fields
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject("E-Commerce Registration"); // subject line
 
@@ -54,7 +58,7 @@ public class UserService implements IUserService {
 			message.setText("YOUR ACCOUNT IS READY\n\n\nHello " + name +",\n\n"
 					+ "Thank You for registering in E-Commerce where you can spread your"
 					+ " buissness in every corner of the country. Below are your"
-					+ " credentials for login"
+					+ " credentials for login."
 					+ "\n\n        Username is :   " + userName
 					+ "\n\n        Password is :   " + password);
 
@@ -93,7 +97,6 @@ public class UserService implements IUserService {
 
 	@Override
 	public Boolean loginUser(String userName, String password, Integer id) throws CustomException {
-
 		Boolean loginSuccess = false;
 		User user = userRepo.findById(id).get();
 		if (user == null) {
@@ -134,32 +137,58 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public UserDto insertUser(UserDto userDto) throws CustomException {
-		User user = new User();
-		userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
-		System.out.println();
-		System.out.println();
-		user = dtoToEntityAssembler(userDto, user);
-		emailGenerator(userDto.getEmail(), userDto.getPassword(), userDto.getName());
-		userRepo.save(user);
-		userDto.setId(user.getId());
-
+	public UserDto insertUser(UserDto userDto) throws InvalidInputException {
+		try {
+			User user = new User();
+			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
+			user = dtoToEntityAssembler(userDto, user);
+			userRepo.save(user);
+			userDto.setId(user.getId());
+			emailGenerator(userDto.getEmail(), userDto.getPassword(), userDto.getName());
+		} catch (Exception e) {
+			throw new InvalidInputException(e.toString());
+		}
 		return userDto;
 	}
 
+	/*@Override
+	public UserDto updateUser(@RequestBody @Valid UserDto userDto) throws InvalidInputException {
+		try {
+			User user = new User();
+			
+			Integer id = userDto.getId();
+			
+			user = userRepo.findById(id).get();
+			
+			System.out.println(user);
+			
+			user = dtoToEntityAssembler(userDto, user);
+			userRepo.save(user);
+		} catch (Exception e) {
+			throw new InvalidInputException(e.toString());
+		}
+		return userDto;
+	}*/
+	
 	@Override
 	public UserDto updateUser(UserDto userDto) throws CustomException {
-		User user = userRepo.findById(userDto.getId()).get();
-		user = dtoToEntityAssembler(userDto, user);
-		userRepo.save(user);
-
-		return userDto;
+	try {
+		User user = new User();
+		Integer id = userDto.getId();
+	user = userRepo.findById(id).get();
+	System.out.println(user);
+	user = dtoToEntityAssembler(userDto, user);
+	userRepo.save(user);
+	} catch (Exception e) {
+	throw new InvalidInputException(e.toString());
+	}
+	return userDto;
 	}
 
+	
 	@Override
 	public void deleteUser(Integer id) {
 		userRepo.deleteById(id);
-
 	}
 }
 

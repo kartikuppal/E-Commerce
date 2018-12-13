@@ -19,6 +19,7 @@ import com.infogain.app.dto.UserDto;
 import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
+import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IUserRepo;
 import com.infogain.app.service.UserService;
 
@@ -52,22 +53,37 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public UserDto userInsert(@RequestBody UserDto userDto) throws CustomException {
-
+	public UserDto userInsert(@RequestBody UserDto userDto) throws InvalidInputException {
 		return userService.insertUser(userDto);
 	}
 
-	@PutMapping("/user")
-	public UserDto updateUser(@RequestBody UserDto userDto, @RequestHeader(value = "userName") String userName,
-			@RequestHeader(value = "password") String password) throws CustomException {
-		Integer id=userDto.getId();
-		Boolean loginSuccess = userService.loginUser(userName, password,id);
-		if (loginSuccess == true) {
-			userDto = userService.updateUser(userDto);
+	/*@PutMapping("/user")
+	public UserDto updateUser(@RequestBody @Valid UserDto userDto, @RequestHeader(value = "userName") String userName,
+			@RequestHeader(value = "password") String password) throws InvalidInputException {
+		try {
+			Integer id=userDto.getId();
+			Boolean loginSuccess = userService.loginUser(userName, password,id);
+			if (loginSuccess == true) {
+				userDto = userService.updateUser(userDto);
+			}
+		} catch (Exception e) {
+			throw new InvalidInputException(e.toString());
 		}
 		return userDto;
+	}*/
+	
+	@PutMapping("/user")
+	public UserDto updateUser(@RequestBody @Valid UserDto userDto, @RequestHeader(value = "userName") String userName,
+	@RequestHeader(value = "password") String password) throws CustomException {
+	Integer id=userDto.getId();
+	Boolean loginSuccess = userService.loginUser(userName, password,id);
+	if (loginSuccess == true) {
+	userDto = userService.updateUser(userDto);
 	}
-
+	return userDto;
+	}
+	
+	
 	@DeleteMapping("/user/{id}")
 	public void deleteUser(@PathVariable(value = "id") Integer userId) {
 		userService.deleteUser(userId);
