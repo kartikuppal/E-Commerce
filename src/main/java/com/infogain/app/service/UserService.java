@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -28,32 +29,38 @@ public class UserService implements IUserService {
 	@Autowired
 	private IStoreRepo storeRepo;
 
-	public void emailGenerator(String userName, String password) {
-		// smtp.googlemail.com
+	public void emailGenerator(String userName, String password, String name) {
 		String to = userName/* "receive@abc.om" */; // sender email
-		String from = "kartikuppal26@gmail.com"; // receiver email
+		String from = "e.commerce0005@gmail.com"; // receiver email
 		String host = "smtp.gmail.com"; // mail server host
-		String user = "kartikuppal26@gmail.com";
-		String pass = "";
+		String pass = "ecom@1234";
 		Properties properties = System.getProperties();
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.setProperty("mail.smtp.host", host);
+		properties.setProperty("mail.smtp.auth", "true");
 
-		Session session = Session.getDefaultInstance(properties); // default
-																	// session
-		System.out.println("ok");
+		Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(from, pass);
+			}
+		});
 		try {
 			MimeMessage message = new MimeMessage(session); // email message
-			message.setFrom(new InternetAddress(from)); // setting header fields
+			message.setFrom("ECommerce"); // setting header fields
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject("E-Commerce Registration"); // subject line
 
 			// actual mail body
-			message.setText("Email Check");
+			message.setText("YOUR ACCOUNT IS READY\n\n\nHello " + name +",\n\n"
+					+ "Thank You for registering in E-Commerce where you can spread your"
+					+ " buissness in every corner of the country. Below are your"
+					+ " credentials for login"
+					+ "\n\n        Username is :   " + userName
+					+ "\n\n        Password is :   " + password);
 
-			// Send message
+		
 			Transport.send(message);
-			System.out.println("Email Sent successfully....");
+
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
@@ -133,7 +140,7 @@ public class UserService implements IUserService {
 		System.out.println();
 		System.out.println();
 		user = dtoToEntityAssembler(userDto, user);
-		emailGenerator(userDto.getEmail(), userDto.getPassword());
+		emailGenerator(userDto.getEmail(), userDto.getPassword(), userDto.getName());
 		userRepo.save(user);
 		userDto.setId(user.getId());
 
