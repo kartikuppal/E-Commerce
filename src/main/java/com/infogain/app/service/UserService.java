@@ -116,16 +116,14 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
+
 		List<User> userList = userRepo.findAll();
 		List<UserDto> userDtoList = new ArrayList<>();
-		
 		for (User user : userList) {
 			UserDto userDto = new UserDto();
 			userDto = entityToDtoAssembler(userDto, user);
-			//System.out.println(userDto);
 			userDtoList.add(userDto);
 		}
-		//System.out.println(userDtos);
 		return userDtoList;
 	}
 
