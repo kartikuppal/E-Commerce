@@ -13,7 +13,8 @@ import com.infogain.app.entity.Store;
 public class UserDto {
 	private Integer id;
 	
-	@NotNull(message="Password cannot be null")
+	//@NotNull(message="Password cannot be null")
+	@Size(min=8, max=15)
 	private String password;
 	
 	@NotNull(message="Name cannot be null")

@@ -16,9 +16,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.infogain.app.dto.StoreDto;
 
 import com.infogain.app.dto.UserDto;
+import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
@@ -34,7 +35,7 @@ public class UserService implements IUserService {
 	private IStoreRepo storeRepo;
 
 	public void emailGenerator(String userName, String password, String name) {
-		String to = userName/* "receive@abc.om" */; // sender email
+		String to = userName; // sender email
 		String from = "e.commerce0005@gmail.com"; // receiver email
 		String pass = "ecom@1234";
 		String host = "smtp.gmail.com"; // mail server host
@@ -55,14 +56,15 @@ public class UserService implements IUserService {
 			message.setSubject("E-Commerce Registration"); // subject line
 
 			// actual mail body
-			message.setText("YOUR ACCOUNT IS READY\n\n\nHello " + name +",\n\n"
+			message.setText("YOUR ACCOUNT IS READY\n\n\nHello " + name + ",\n\n"
 					+ "Thank You for registering in E-Commerce where you can spread your"
+
 					+ " buissness in every corner of the country. Below are your"
 					+ " credentials for login."
 					+ "\n\n        Username is :   " + userName
 					+ "\n\n        Password is :   " + password);
 
-		
+
 			Transport.send(message);
 
 		} catch (MessagingException mex) {
@@ -116,9 +118,10 @@ public class UserService implements IUserService {
 	public List<UserDto> getAllUsers() {
 
 		List<User> user = userRepo.findAll();
-		UserDto userDto = new UserDto();
+		
 		List<UserDto> userDtos = new ArrayList<>();
 		for (User u : user) {
+			UserDto userDto = new UserDto();
 			userDto = entityToDtoAssembler(userDto, u);
 			System.out.println(userDto);
 			userDtos.add(userDto);
@@ -136,15 +139,14 @@ public class UserService implements IUserService {
 		return userDto;
 	}
 
-	@Override
 	public UserDto insertUser(UserDto userDto) throws InvalidInputException {
 		try {
 			User user = new User();
 			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
 			user = dtoToEntityAssembler(userDto, user);
 			userRepo.save(user);
-			userDto.setId(user.getId());
 			emailGenerator(userDto.getEmail(), userDto.getPassword(), userDto.getName());
+			userDto.setId(user.getId());
 		} catch (Exception e) {
 			throw new InvalidInputException(e.toString());
 		}
@@ -172,18 +174,16 @@ public class UserService implements IUserService {
 	
 	@Override
 	public UserDto updateUser(UserDto userDto) throws CustomException {
-	try {
-		User user = new User();
-		Integer id = userDto.getId();
-	user = userRepo.findById(id).get();
-	System.out.println(user);
-	user = dtoToEntityAssembler(userDto, user);
-	userRepo.save(user);
-	} catch (Exception e) {
-	throw new InvalidInputException(e.toString());
-	}
-	return userDto;
-	}
+
+		try {
+			User user = userRepo.findById(userDto.getId()).get();
+			user = dtoToEntityAssembler(userDto, user);
+			userRepo.save(user);
+		} catch (Exception e) {
+			throw new InvalidInputException(e.toString());
+		}
+		return userDto;
+}
 
 	
 	@Override

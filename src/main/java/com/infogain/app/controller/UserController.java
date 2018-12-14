@@ -57,20 +57,6 @@ public class UserController {
 		return userService.insertUser(userDto);
 	}
 
-	/*@PutMapping("/user")
-	public UserDto updateUser(@RequestBody @Valid UserDto userDto, @RequestHeader(value = "userName") String userName,
-			@RequestHeader(value = "password") String password) throws InvalidInputException {
-		try {
-			Integer id=userDto.getId();
-			Boolean loginSuccess = userService.loginUser(userName, password,id);
-			if (loginSuccess == true) {
-				userDto = userService.updateUser(userDto);
-			}
-		} catch (Exception e) {
-			throw new InvalidInputException(e.toString());
-		}
-		return userDto;
-	}*/
 	
 	@PutMapping("/user")
 	public UserDto updateUser(@RequestBody @Valid UserDto userDto, @RequestHeader(value = "userName") String userName,
