@@ -6,33 +6,33 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.infogain.app.entity.Brand;
 import com.infogain.app.entity.Category;
 
 public class ProductDto {
-	
-	@Column(length=10)
 	private Integer id;
 
 	@NotNull(message="Name cannot be null")
-	@Column(length=50)
+	@Size(min=4, max=50)
 	private String name;
 
-	@NotNull(message="Price cannot be Negati")
+	@NotNull(message="price cannot be null")
 	@Column(length=12)
 	private Double price;
 	
-	@NotNull
+	//@NotNull(message="date cannot be null")
 	private Date manufacturingDate;
 	
-	@NotNull
 	@Column(length=8)
 	private Float weight;
 	
+	//@NotNull(message="weight cannot be null")
 	@Column(length=16)
 	private String size;
 	
+	@NotNull(message="rating cannot be null")
 	@Column(length=2)
 	private Byte rating;
 	
@@ -41,11 +41,11 @@ public class ProductDto {
 	
 	public ProductDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public ProductDto(Integer id, @NotNull(message = "Name cannot be null") String name,
-			@NotNull(message = "Price cannot be Negati") Double price, @NotNull Date manufacturingDate,
-			@NotNull Float weight, String size, Byte rating, List<Category> category, List<Brand> brand) {
+	
+	public ProductDto(Integer id, @NotNull(message = "Name cannot be null") @Size(min = 10, max = 50) String name,
+			@NotNull(message = "price cannot be null") Double price, Date manufacturingDate, Float weight, String size,
+			@NotNull(message = "rating cannot be null") Byte rating, List<Category> category, List<Brand> brand) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,6 +57,7 @@ public class ProductDto {
 		this.category = category;
 		this.brand = brand;
 	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -111,13 +112,11 @@ public class ProductDto {
 	public void setBrand(List<Brand> brand) {
 		this.brand = brand;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", name=" + name + ", price=" + price + ", manufacturingDate="
 				+ manufacturingDate + ", weight=" + weight + ", size=" + size + ", rating=" + rating + ", category="
 				+ category + ", brand=" + brand + "]";
 	}
-	
-	
-	
 }

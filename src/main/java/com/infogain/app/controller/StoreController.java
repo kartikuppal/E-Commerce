@@ -25,7 +25,6 @@ import com.infogain.app.service.StoreService;
 public class StoreController {
 	@Autowired
 	StoreService storeService;
-	
 	@Autowired
 	IStoreRepo storeRepo;
 	
@@ -45,7 +44,7 @@ public class StoreController {
 	}
 	
 	@PutMapping("/store")
-	public StoreDto updateStore(@RequestBody StoreDto storeDto) throws CustomException {
+	public StoreDto updateStore(@RequestBody StoreDto storeDto) throws InvalidInputException {
 		return storeService.updateStore(storeDto);
 	}
 	

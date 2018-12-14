@@ -116,18 +116,17 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
-
-		List<User> user = userRepo.findAll();
+		List<User> userList = userRepo.findAll();
+		List<UserDto> userDtoList = new ArrayList<>();
 		
-		List<UserDto> userDtos = new ArrayList<>();
-		for (User u : user) {
+		for (User user : userList) {
 			UserDto userDto = new UserDto();
-			userDto = entityToDtoAssembler(userDto, u);
-			System.out.println(userDto);
-			userDtos.add(userDto);
+			userDto = entityToDtoAssembler(userDto, user);
+			//System.out.println(userDto);
+			userDtoList.add(userDto);
 		}
-		System.out.println(userDtos);
-		return userDtos;
+		//System.out.println(userDtos);
+		return userDtoList;
 	}
 
 	@Override
@@ -153,28 +152,8 @@ public class UserService implements IUserService {
 		return userDto;
 	}
 
-	/*@Override
-	public UserDto updateUser(@RequestBody @Valid UserDto userDto) throws InvalidInputException {
-		try {
-			User user = new User();
-			
-			Integer id = userDto.getId();
-			
-			user = userRepo.findById(id).get();
-			
-			System.out.println(user);
-			
-			user = dtoToEntityAssembler(userDto, user);
-			userRepo.save(user);
-		} catch (Exception e) {
-			throw new InvalidInputException(e.toString());
-		}
-		return userDto;
-	}*/
-	
 	@Override
 	public UserDto updateUser(UserDto userDto) throws CustomException {
-
 		try {
 			User user = userRepo.findById(userDto.getId()).get();
 			user = dtoToEntityAssembler(userDto, user);
@@ -183,8 +162,7 @@ public class UserService implements IUserService {
 			throw new InvalidInputException(e.toString());
 		}
 		return userDto;
-}
-
+	}
 	
 	@Override
 	public void deleteUser(Integer id) {

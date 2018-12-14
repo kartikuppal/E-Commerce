@@ -19,8 +19,7 @@ public class StoreService implements IStoreService {
 	@Autowired
 	private IStoreRepo storeRepo;
 	
-	public StoreDto EntityToDtoAssembler(StoreDto storeDto, Store store) {
-		
+	public StoreDto entityToDtoAssembler(StoreDto storeDto, Store store) {
 		storeDto.setId(store.getId());
 		storeDto.setName(store.getName());
 		storeDto.setAddress(store.getAddress());
@@ -31,7 +30,6 @@ public class StoreService implements IStoreService {
 	}
 	
 	public Store dtoToEntityAssembler(StoreDto storeDto, Store store) {
-
 		store.setName(storeDto.getName());
 		store.setAddress(storeDto.getAddress());
 		store.setPostalCode(storeDto.getPostalCode());
@@ -63,7 +61,7 @@ public class StoreService implements IStoreService {
 		
 		for(Store store: storeList) {
 			StoreDto storeDto = new StoreDto();
-			storeDto = EntityToDtoAssembler(storeDto, store);
+			storeDto = entityToDtoAssembler(storeDto, store);
 			storeDtoList.add(storeDto);
 		}
 		return storeDtoList;
@@ -74,8 +72,7 @@ public class StoreService implements IStoreService {
 	public StoreDto displayStoreById(Integer id) {
 		Store store = storeRepo.findById(id).get();
 		StoreDto storeDto = new StoreDto();;
-		storeDto = EntityToDtoAssembler(storeDto, store);
-		
+		storeDto = entityToDtoAssembler(storeDto, store);
 		return storeDto;
 	}
 

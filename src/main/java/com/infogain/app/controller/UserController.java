@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.UserDto;
-import com.infogain.app.entity.Store;
-import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IUserRepo;
@@ -56,7 +54,6 @@ public class UserController {
 	public UserDto userInsert(@RequestBody UserDto userDto) throws InvalidInputException {
 		return userService.insertUser(userDto);
 	}
-
 	
 	@PutMapping("/user")
 	public UserDto updateUser(@RequestBody @Valid UserDto userDto, @RequestHeader(value = "userName") String userName,
