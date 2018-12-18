@@ -8,12 +8,12 @@ import com.infogain.app.exception.CustomException;
 
 interface IUserService {
 
-	public Boolean loginUser(String userName,String password,Integer id)throws CustomException;
-	public List<UserDto> getAllUsers();
-	public UserDto getUserById(Integer id);
-	public UserDto insertUser(UserDto userDto) throws  CustomException;
-	public UserDto updateUser(UserDto userDto) throws CustomException;
-	public void deleteUser(Integer id);
+	public Boolean login(String userName,String password,Integer id)throws CustomException;
+	public List<UserDto> getAll();
+	public UserDto getById(Integer id);
+	public UserDto insert(UserDto userDto) throws  CustomException;
+	public UserDto update(UserDto userDto) throws CustomException;
+	public void delete(Integer id);
 
 	
 }

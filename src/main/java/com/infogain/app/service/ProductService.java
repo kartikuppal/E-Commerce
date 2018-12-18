@@ -18,7 +18,7 @@ import com.infogain.app.repository.IProductRepo;
 @Service
 public class ProductService implements IProductService {
 	@Autowired
-	IProductRepo productRepo;
+	private IProductRepo productRepo;
 	
 	public ProductDto entityToDtoAssembler(ProductDto productDto, Product product) {
 		productDto.setId(product.getId());
@@ -58,8 +58,9 @@ public class ProductService implements IProductService {
 	public List<ProductDto> displayAllProduct() {
 		List<Product> productList = productRepo.findAll();
 		List<ProductDto> productDtoList = new ArrayList<>();
-		ProductDto productDto = new ProductDto();
+		
 		for (Product product : productList) {
+			ProductDto productDto = new ProductDto();
 			productDto = entityToDtoAssembler(productDto, product);
 			productDtoList.add(productDto);
 		}
