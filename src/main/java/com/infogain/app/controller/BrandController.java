@@ -2,6 +2,8 @@ package com.infogain.app.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.infogain.app.entity.Brand;
-import com.infogain.app.exception.CustomException;
+import com.infogain.app.dto.BrandDto;
+import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IBrandRepo;
 import com.infogain.app.service.BrandService;
 
@@ -22,32 +24,31 @@ import com.infogain.app.service.BrandService;
 public class BrandController {
 	@Autowired
 	BrandService brandService;
-	
 	@Autowired
 	IBrandRepo brandRepo;
 	
 	@PostMapping("/brand")
-	public Brand insertBrand(@RequestBody Brand brand) throws CustomException {
-		return brandService.insertBrand(brand);
+	public BrandDto insert(@RequestBody @Valid BrandDto brandDto) throws InvalidInputException {
+		return brandService.insert(brandDto);
 	}
 	
 	@GetMapping("/brand")
-	public List<Brand> displayAllBrands(@RequestBody Brand brand) {
-		return brandService.displayAllBrands();
+	public List<BrandDto> displayAll(@RequestBody BrandDto brandDto) {
+		return brandService.displayAll();
 	}
 	
 	@GetMapping("/brand/{id}")
-	public Brand displayBrandById(@PathVariable(value = "id") Integer brandId) {
-		return brandService.displayBrandById(brandId);
+	public BrandDto displayById(@PathVariable(value = "id") Integer brandId) {
+		return brandService.displayById(brandId);
 	}
 	
-	@PutMapping("/brand/{id}")
-	public Brand updateBrand(@RequestBody Brand brand, @PathVariable(value = "id") Integer brandId) throws CustomException {
-		return brandService.updateBrand(brand, brandId);
+	@PutMapping("/brand")
+	public BrandDto update(@RequestBody @Valid BrandDto brandDto) throws InvalidInputException {
+		return brandService.update(brandDto);
 	}
 
 	@DeleteMapping("/brand/{id}")
-	public void deleteBrand(@PathVariable(value = "id") Integer brandId) {
-		brandService.deleteBrand(brandId);
+	public void delete(@PathVariable(value = "id") Integer brandId) {
+		brandService.delete(brandId);
 	}
 }

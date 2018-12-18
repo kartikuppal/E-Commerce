@@ -2,13 +2,13 @@ package com.infogain.app.service;
 
 import java.util.List;
 
-import com.infogain.app.entity.Brand;
-import com.infogain.app.exception.CustomException;
+import com.infogain.app.dto.BrandDto;
+import com.infogain.app.exception.InvalidInputException;
 
 public interface IBrandService {
-	public Brand insertBrand(Brand brand) throws CustomException;
-	public List<Brand> displayAllBrands();
-	public Brand displayBrandById(Integer id);
-	public Brand updateBrand(Brand updatedBrand, Integer id) throws CustomException;
-	public void deleteBrand(Integer id);
+	public BrandDto insert(BrandDto brandDto) throws InvalidInputException;
+	public List<BrandDto> displayAll();
+	public BrandDto displayById(Integer id);
+	public BrandDto update(BrandDto brandDto) throws InvalidInputException;
+	public void delete(Integer id);
 }

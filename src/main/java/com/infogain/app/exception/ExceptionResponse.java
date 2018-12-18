@@ -91,5 +91,4 @@ public class ExceptionResponse {
 	public void callerURL(final String requestedURI) {
 		this.requestedURI = requestedURI;
 	}
-	
 }

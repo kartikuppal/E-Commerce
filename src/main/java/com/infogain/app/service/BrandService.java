@@ -1,77 +1,95 @@
 package com.infogain.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.infogain.app.dto.BrandDto;
 import com.infogain.app.entity.Brand;
-import com.infogain.app.exception.CustomException;
+import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IBrandRepo;
 
 @Service
-
 public class BrandService implements IBrandService{
-
-
-
 	@Autowired
-	IBrandRepo brandRepo;
+	private IBrandRepo brandRepo;
 	
-	//inserting values
+	private static final Logger logger = LoggerFactory.getLogger(BrandService.class.getName());
 	
-	public Brand insertBrand(Brand brand) throws CustomException {
-
-		Brand existingBrand = brandRepo.findByName(brand.getName());
+	public BrandDto entityToDtoAssembler(BrandDto brandDto, Brand brand) {
+		brandDto.setId(brand.getId());
+		brandDto.setName(brand.getName());
 		
-		if(existingBrand == null)
-		{
-			brand.setName(brand.getName());
-		}
-		else
-		{
-			throw new CustomException("Brand Name already exists");
-		}
-		return brandRepo.save(brand);
+		return brandDto;
 	}
 	
-	/*displaying values*/
-	@Override
-	public List<Brand> displayAllBrands() {
-		return brandRepo.findAll();
-	}
-	
-	/*displaying values by id*/
-	@Override
-	public Brand displayBrandById(Integer id) {
-		return brandRepo.findById(id).get();
-	}
-	
+	public Brand dtoToEntityAssembler(BrandDto brandDto, Brand brand) {
+		brand.setName(brandDto.getName());
 
+		return brand;
+	}
 	
-	/*updating values by id*/
-	@Override
-	public Brand updateBrand(Brand updatedBrand, Integer id) throws CustomException {
+	/*inserting value*/
+	
+	public BrandDto insert(BrandDto brandDto) throws InvalidInputException {
+		try {
+			Brand brand = new Brand();
+			brand = dtoToEntityAssembler(brandDto, brand);
+			brandRepo.save(brand);
+			brandDto.setId(brand.getId());
+		} catch (Exception e) {
+			throw new InvalidInputException(e.toString());
+		}
+		return brandDto;
+	}
+	
+	/*displaying all values*/
+	
+	public List<BrandDto> displayAll() {
 		
+		List<Brand> brandList = brandRepo.findAll();
+		List<BrandDto> brandDtoList = new ArrayList<>();
+		
+		for(Brand brand : brandList) {
+			BrandDto brandDto = new BrandDto();
+			brandDto = entityToDtoAssembler(brandDto, brand);
+			brandDtoList.add(brandDto);
+			
+			logger.info("display>>>>>>>>>>>>");
+		}
+		return brandDtoList;
+	}
+	
+	/* displaying value by id */
+
+	public BrandDto displayById(Integer id) {
 		Brand brand = brandRepo.findById(id).get();
-		
-		Brand existingBrand = brandRepo.findByName(updatedBrand.getName());
-		
-		if(existingBrand == null)
-		{
-			brand.setName(updatedBrand.getName());
-		}
-		else
-		{
-			throw new CustomException("Brand Name already exists");
-		}
-		return brandRepo.save(brand);
+		BrandDto brandDto = new BrandDto();
+		brandDto = entityToDtoAssembler(brandDto, brand);
+		return brandDto;
 	}
-	
-	/*deleting values by id*/
-	@Override
-	public void deleteBrand(Integer id) {
+
+	/* updating value by id */
+
+	public BrandDto update(BrandDto brandDto) throws InvalidInputException {
+		try {
+			Integer id = brandDto.getId();
+			Brand brand = brandRepo.findById(id).get();
+			brand = dtoToEntityAssembler(brandDto, brand);
+			brand = brandRepo.save(brand);
+		} catch (Exception e) {
+			throw new InvalidInputException(e.toString());
+		}
+		return brandDto;
+	}
+
+	/* deleting value by id */
+
+	public void delete(Integer id) {
 		brandRepo.deleteById(id);
 	}
-
-
 }

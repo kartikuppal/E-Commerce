@@ -5,13 +5,14 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.infogain.app.dto.ProductDto;
 import com.infogain.app.entity.Product;
-import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IProductRepo;
 
@@ -19,6 +20,8 @@ import com.infogain.app.repository.IProductRepo;
 public class ProductService implements IProductService {
 	@Autowired
 	private IProductRepo productRepo;
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProductService.class.getName());
 	
 	public ProductDto entityToDtoAssembler(ProductDto productDto, Product product) {
 		productDto.setId(product.getId());
@@ -43,7 +46,9 @@ public class ProductService implements IProductService {
 		return product;
 	}
 	
-	public ProductDto insertProduct(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
+	/*inserting value*/
+	
+	public ProductDto insert(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
 		try {
 			Product product = new Product();
 			product = dtoToEntityAssembler(productDto, product);
@@ -55,7 +60,9 @@ public class ProductService implements IProductService {
 		return productDto;
 	}
 	
-	public List<ProductDto> displayAllProduct() {
+	/*displaying all values*/
+	
+	public List<ProductDto> displayAll() {
 		List<Product> productList = productRepo.findAll();
 		List<ProductDto> productDtoList = new ArrayList<>();
 		
@@ -63,18 +70,24 @@ public class ProductService implements IProductService {
 			ProductDto productDto = new ProductDto();
 			productDto = entityToDtoAssembler(productDto, product);
 			productDtoList.add(productDto);
+			
+			logger.info("display>>>>>>>>>>>>");
 		}
 		return productDtoList;
 	}
 	
-	public ProductDto displayProductById(Integer id) {
+	/* displaying value by id */
+	
+	public ProductDto displayById(Integer id) {
 		Product product = productRepo.findById(id).get();
 		ProductDto productDto = new ProductDto();
 		productDto = entityToDtoAssembler(productDto, product);
 		return productDto;
 	}
 	
-	public ProductDto updateProduct(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
+	/* updating value by id */
+	
+	public ProductDto update(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
 		try {
 			Integer id = productDto.getId();
 			Product product = productRepo.findById(id).get();
@@ -85,9 +98,11 @@ public class ProductService implements IProductService {
 		}
 		return productDto;
 	}
-
+	
+	/* deleting value by id */
+	
 	@Override
-	public void deleteProduct(Integer id) {
+	public void delete(Integer id) {
 		productRepo.deleteById(id);
 	}
 }

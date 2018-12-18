@@ -28,27 +28,27 @@ public class ProductController {
 	ProductService productService;
 	
 	@PostMapping("/product")
-	public ProductDto productInsert(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
-		return productService.insertProduct(productDto);
+	public ProductDto insert(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
+		return productService.insert(productDto);
 	}
 	
 	@GetMapping("/product")
-	public List<ProductDto> displayAllProducts(@RequestBody ProductDto productDto) {
-		return productService.displayAllProduct();
+	public List<ProductDto> displayAll(@RequestBody ProductDto productDto) {
+		return productService.displayAll();
 	}
 
 	@GetMapping("/product/{id}")
-	public ProductDto displayUserById(@PathVariable(value = "id") Integer productId) {
-		return productService.displayProductById(productId);
+	public ProductDto displayById(@PathVariable(value = "id") Integer productId) {
+		return productService.displayById(productId);
 	}
 	
 	@PutMapping("/product")
-	public ProductDto updateProduct(@RequestBody ProductDto productDto) throws InvalidInputException {
-		return productService.updateProduct(productDto);
+	public ProductDto update(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
+		return productService.update(productDto);
 	}
 
 	@DeleteMapping("/product/{id}")
-	public void deleteProduct(@PathVariable(value = "id") Integer productId) {
-		productService.deleteProduct(productId);
+	public void delete(@PathVariable(value = "id") Integer productId) {
+		productService.delete(productId);
 	}
 }

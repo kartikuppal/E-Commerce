@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,8 @@ public class StoreService implements IStoreService {
 	@Autowired
 	private IStoreRepo storeRepo;
 	
+	private static final Logger logger = LoggerFactory.getLogger(StoreService.class.getName());
+
 	public StoreDto entityToDtoAssembler(StoreDto storeDto, Store store) {
 		storeDto.setId(store.getId());
 		storeDto.setName(store.getName());
@@ -40,7 +44,7 @@ public class StoreService implements IStoreService {
 
 	/*inserting value*/
 	
-	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException {
+	public StoreDto insert(StoreDto storeDto) throws InvalidInputException {
 		try {
 			Store store = new Store();
 			store = dtoToEntityAssembler(storeDto, store);
@@ -54,7 +58,7 @@ public class StoreService implements IStoreService {
 	
 	/*displaying all values*/
 	
-	public List<StoreDto> displayAllStore() {
+	public List<StoreDto> displayAll() {
 		
 		List<Store> storeList = storeRepo.findAll();
 		List<StoreDto> storeDtoList = new ArrayList<>();
@@ -63,13 +67,15 @@ public class StoreService implements IStoreService {
 			StoreDto storeDto = new StoreDto();
 			storeDto = entityToDtoAssembler(storeDto, store);
 			storeDtoList.add(storeDto);
+			
+			logger.info("display>>>>>>>>>>>>");
 		}
 		return storeDtoList;
 	}
 
 	/* displaying value by id */
 
-	public StoreDto displayStoreById(Integer id) {
+	public StoreDto displayById(Integer id) {
 		Store store = storeRepo.findById(id).get();
 		StoreDto storeDto = new StoreDto();;
 		storeDto = entityToDtoAssembler(storeDto, store);
@@ -78,7 +84,7 @@ public class StoreService implements IStoreService {
 
 	/* updating value by id */
 
-	public StoreDto updateStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException {
+	public StoreDto update(StoreDto storeDto) throws InvalidInputException {
 		try {
 			Integer id = storeDto.getId();
 			Store store = storeRepo.findById(id).get();
@@ -92,7 +98,7 @@ public class StoreService implements IStoreService {
 
 	/* deleting value by id */
 
-	public void deleteStore(Integer id) {
+	public void delete(Integer id) {
 		storeRepo.deleteById(id);
 	}
 }

@@ -65,7 +65,6 @@ public class UserController {
 	@GetMapping("/user")
 	public List<UserDto> displayAll() {
 		return userService.getAll();
-
 	}
 	
 
@@ -100,7 +99,6 @@ public class UserController {
 	}
 	return userDto;
 	}
-	
 	
 	@DeleteMapping("/user/{id}")
 	public void delete(@PathVariable(value = "id") Integer userId) {

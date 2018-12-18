@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.StoreDto;
-import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IStoreRepo;
 import com.infogain.app.service.StoreService;
@@ -30,26 +29,26 @@ public class StoreController {
 	
 	@PostMapping("/store")
 	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException {
-		return storeService.insertStore(storeDto);
+		return storeService.insert(storeDto);
 	}
 	
 	@GetMapping("/store")
 	public List<StoreDto> displayAllStores(@RequestBody StoreDto storeDto) {
-		return storeService.displayAllStore();
+		return storeService.displayAll();
 	}
 	
 	@GetMapping("/store/{id}")
 	public StoreDto displayStoreById(@PathVariable(value = "id") Integer storeId) {
-		return storeService.displayStoreById(storeId);
+		return storeService.displayById(storeId);
 	}
 	
 	@PutMapping("/store")
 	public StoreDto updateStore(@RequestBody StoreDto storeDto) throws InvalidInputException {
-		return storeService.updateStore(storeDto);
+		return storeService.update(storeDto);
 	}
 	
 	@DeleteMapping("/store/{id}")
 	public void deleteStore(@PathVariable(value = "id") Integer storeId) {
-		storeService.deleteStore(storeId);
+		storeService.delete(storeId);
 	}
 }
