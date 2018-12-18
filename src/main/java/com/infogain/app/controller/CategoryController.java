@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.infogain.app.dto.CategoryDto;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.ICategoryRepo;
-import com.infogain.app.service.CategoryService;
+import com.infogain.app.service.CategoryServiceImpl;
 
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
 	@Autowired
-	CategoryService categoryService;
+	private CategoryServiceImpl categoryService;
 	@Autowired
-	ICategoryRepo categoryRepo;
+	private ICategoryRepo categoryRepo;
 	
 	@PostMapping("/category")
 	public CategoryDto insert(@RequestBody @Valid CategoryDto categoryDto) throws InvalidInputException {

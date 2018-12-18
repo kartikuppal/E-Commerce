@@ -14,11 +14,12 @@ import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IBrandRepo;
 
 @Service
-public class BrandService implements IBrandService{
+public class BrandServiceImpl implements IBrandService{
+
 	@Autowired
 	private IBrandRepo brandRepo;
 	
-	private static final Logger logger = LoggerFactory.getLogger(BrandService.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(BrandServiceImpl.class.getName());
 	
 	public BrandDto entityToDtoAssembler(BrandDto brandDto, Brand brand) {
 		brandDto.setId(brand.getId());

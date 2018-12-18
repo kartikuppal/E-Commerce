@@ -1,14 +1,8 @@
 package com.infogain.app.controller;
 
 import java.util.List;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.infogain.app.dto.UserDto;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
@@ -32,28 +25,7 @@ public class UserController {
 	private UserServiceImpl userService;
 	@Autowired
 	private IUserRepo userRepo;
-	@Autowired
-	JavaMailSender mailSender;
-	
 
-	/* @RequestMapping("/sendMail")
-	    public String sendMail() {
-	        MimeMessage message = mailSender.createMimeMessage();
-	        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-	        try {
-	            helper.setTo("kartikuppal25@gmail.com");
-	            helper.setText("Greetings :)");
-	            helper.setSubject("Mail From Spring Boot");
-	        } catch (MessagingException e) {
-	            e.printStackTrace();
-	            return "Error while sending mail ..";
-	        }
-	        mailSender.send(message);
-	        return "Mail Sent Success!";
-	    }*/
-
-	
 	@GetMapping("/activateAccount/{id}")
 	public String activeUser(@PathVariable(value = "id") Integer userId)
 	{

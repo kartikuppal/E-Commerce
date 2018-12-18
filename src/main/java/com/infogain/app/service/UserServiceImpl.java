@@ -1,19 +1,15 @@
 package com.infogain.app.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.UUID;
-
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
@@ -75,39 +71,6 @@ public class UserServiceImpl implements IUserService {
 		mailSender.send(message);
 		return "Mail Sent Success!";
 	}
-
-	/*
-	  public void emailGenerator(String userName, String password, String name)
-	  { String to = userName; // sender email String from =
-	  "e.commerce0005@gmail.com"; // receiver email String pass = "ecom@1234";
-	  String host = "smtp.gmail.com"; // mail server host Properties properties
-	  = System.getProperties(); properties.put("mail.smtp.starttls.enable",
-	  "true"); properties.setProperty("mail.smtp.host", host);
-	  properties.setProperty("mail.smtp.auth", "true");
-	  
-	  Session session = Session.getDefaultInstance(properties, new
-	  javax.mail.Authenticator() { protected PasswordAuthentication
-	  getPasswordAuthentication() { return new PasswordAuthentication(from,
-	  pass); } }); try { MimeMessage message = new MimeMessage(session); //
-	  email message message.setFrom(new
-	  InternetAddress(from,"E-Commerce Application")); // setting header fields
-	  message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-	  message.setSubject("E-Commerce Registration"); // subject line
-	  
-	  // actual mail body message.setText("YOUR ACCOUNT IS READY\n\n\nHello " +
-	  name + "   ,\n\n" +
-	  "Thank You for registering in E-Commerce where you can spread your"
-	  
-	  + " buissness in every corner of the country. Below are your" +
-	  " credentials for login." + "\n\n        Username is :   " + userName +
-	  "\n\n        Password is :   " + password);
-	  
-	  
-	  Transport.send(message);
-	  
-	  } catch (MessagingException | UnsupportedEncodingException mex) {
-	  mex.printStackTrace(); } }
-	 */
 
 	public UserDto entityToDtoAssembler(UserDto userDto, User user) {
 		userDto.setId(user.getId());

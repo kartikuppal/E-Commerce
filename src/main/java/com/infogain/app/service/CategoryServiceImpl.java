@@ -14,11 +14,11 @@ import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.ICategoryRepo;
 
 @Service
-public class CategoryService implements ICategoryService {
+public class CategoryServiceImpl implements ICategoryService {
 	@Autowired
 	private ICategoryRepo categoryRepo;
 	
-	private static final Logger logger = LoggerFactory.getLogger(CategoryService.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class.getName());
 
 	public CategoryDto entityToDtoAssembler(CategoryDto categoryDto, Category category) {
 		categoryDto.setId(category.getId());

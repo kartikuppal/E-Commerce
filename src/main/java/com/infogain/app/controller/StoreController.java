@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.infogain.app.dto.StoreDto;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IStoreRepo;
-import com.infogain.app.service.StoreService;
+import com.infogain.app.service.StoreServiceImpl;
 
 @RestController
 @RequestMapping("/api")
 public class StoreController {
 	@Autowired
-	StoreService storeService;
+	StoreServiceImpl storeService;
 	@Autowired
 	IStoreRepo storeRepo;
 	

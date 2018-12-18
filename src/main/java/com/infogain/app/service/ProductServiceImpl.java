@@ -17,11 +17,11 @@ import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IProductRepo;
 
 @Service
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements IProductService {
 	@Autowired
 	private IProductRepo productRepo;
 	
-	private static final Logger logger = LoggerFactory.getLogger(ProductService.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class.getName());
 	
 	public ProductDto entityToDtoAssembler(ProductDto productDto, Product product) {
 		productDto.setId(product.getId());
