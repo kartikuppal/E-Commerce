@@ -1,22 +1,10 @@
 package com.infogain.app.repository;
 
-import java.math.BigInteger;
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.infogain.app.dto.UserDto;
-import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 
-
-public interface IUserRepo extends JpaRepository<User, Integer>
-{
-	public User findByEmail(String email);
-	/*public User findByMobileNumber(BigInteger mobileNumber);
-	public User findById(List<Integer> ids);*/
-	public User save(UserDto userDto);
-
-
-
+public interface IUserRepo extends JpaRepository<User, Integer> {
+	User findByEmail(String email);
+	User save(UserDto userDto);
 }

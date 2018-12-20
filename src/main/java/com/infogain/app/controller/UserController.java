@@ -24,15 +24,16 @@ import com.infogain.app.service.UserServiceImpl;
 public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
-	
-	@GetMapping("/activateAccount/{id}")
-	public String activeUser(@PathVariable(value = "id") Integer userId) {
+
+	@GetMapping("/userActive/{id}")
+	public String activeUser(@PathVariable(value = "id") Integer userId)
+	{
 		userService.activation(userId);
 		return "Your Account is Activated !!!";
 	}
 	
 	@GetMapping("/user")
-	public List<UserDto> displayAll() {
+	public List<UserDto> getAll() {
 		return userService.getAll();
 	}
 
@@ -67,7 +68,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/user/{id}")
-	public void delete(@PathVariable(value = "id") Integer userId) {
-		userService.delete(userId);
+	public String delete(@PathVariable(value = "id") Integer userId) {
+		return userService.delete(userId);
 	}
 }

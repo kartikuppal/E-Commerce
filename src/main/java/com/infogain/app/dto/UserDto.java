@@ -39,8 +39,6 @@ public class UserDto {
 	@NotNull(message="Mobile number cannot be null")
 	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String mobileNumber;
-	
-	@NotNull(message="status cannot be null")
 	private Byte status;
 	
 	private List<Store> store;

@@ -29,14 +29,16 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserRepo userRepo;
 	@Autowired
-	JavaMailSender mailSender;
+	private JavaMailSender mailSender;
 
+
+	@Override
 	public void activation(Integer id) {
 		User user = userRepo.findById(id).get();
 		user.setStatus((byte) 1);
 		userRepo.save(user);
 	}
-
+	@Override
 	public String sendMail(String userName, String password, String name, Integer id) {
 		//String from = "e.commerce0005@gmail.com";
 		
@@ -64,6 +66,7 @@ public class UserServiceImpl implements IUserService {
 		return "Mail Sent Success!";
 	}
 
+	@Override
 	public UserDto entityToDtoAssembler(UserDto userDto, User user) {
 		userDto.setId(user.getId());
 		userDto.setAddress(user.getAddress());
@@ -77,6 +80,7 @@ public class UserServiceImpl implements IUserService {
 		return userDto;
 	}
 
+	@Override
 	public User dtoToEntityAssembler(UserDto userDto, User user) {
 		user.setAddress(userDto.getAddress());
 		user.setEmail(userDto.getEmail());
@@ -130,9 +134,23 @@ public class UserServiceImpl implements IUserService {
 		return userDto;
 	}
 
+	@Override
 	public UserDto insert(UserDto userDto) throws InvalidInputException {
 		try {
 			User user = new User();
+			if(userDto.getPassword()!=null)
+			{
+				throw new CustomException("User cannot create password");
+			}
+			else if(userDto.getId()!=null)
+			{
+				throw new CustomException("User cannot add id");
+			}
+			else if(userDto.getStatus()!=null)
+			{
+				throw new CustomException("Status cannot add status ");
+			}
+			
 			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
 			user = dtoToEntityAssembler(userDto, user);
 			userDto.setStatus((byte) 0);
@@ -158,7 +176,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public String delete(Integer id) {
 		userRepo.deleteById(id);
+		return "User with id " +id+ " is Removed";
 	}
 }

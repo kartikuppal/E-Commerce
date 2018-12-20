@@ -26,8 +26,7 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 	@ExceptionHandler(InvalidInputException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public final ResponseEntity<Object> handleInvalidInputException(InvalidInputException exception, 
-			WebRequest request) {
-		
+			WebRequest request) {	
 		ExceptionResponse error = new ExceptionResponse( LocalDateTime.now(), HttpStatus.valueOf(exception.getCode()),
 				exception.getCode(),"Validation Failed", "invalid input Exception", exception.getMessage()); 
 		

@@ -48,7 +48,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	/*inserting value*/
 	
-	public ProductDto insert(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {
+	public ProductDto insert(ProductDto productDto) throws InvalidInputException {
 		try {
 			Product product = new Product();
 			product = dtoToEntityAssembler(productDto, product);

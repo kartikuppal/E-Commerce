@@ -25,7 +25,6 @@ public class StoreController {
 	@Autowired
 	private StoreServiceImpl storeService;
 	
-	
 	@PostMapping("/store")
 	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException, CustomException {
 		return storeService.insert(storeDto);
