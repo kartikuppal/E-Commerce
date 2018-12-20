@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.StoreDto;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
-import com.infogain.app.repository.IStoreRepo;
 import com.infogain.app.service.StoreServiceImpl;
 
 @RestController
 @RequestMapping("/api")
 public class StoreController {
 	@Autowired
-	StoreServiceImpl storeService;
-	@Autowired
-	IStoreRepo storeRepo;
+	private StoreServiceImpl storeService;
+	
 	
 	@PostMapping("/store")
-	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException {
+	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException, CustomException {
 		return storeService.insert(storeDto);
 	}
 	

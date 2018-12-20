@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.BrandDto;
 import com.infogain.app.exception.InvalidInputException;
-import com.infogain.app.repository.IBrandRepo;
 import com.infogain.app.service.BrandServiceImpl;
 
 @RestController
@@ -24,9 +23,6 @@ import com.infogain.app.service.BrandServiceImpl;
 public class BrandController {
 	@Autowired
     private BrandServiceImpl brandService;
-	
-	@Autowired
-	private IBrandRepo brandRepo;
 	
 	@PostMapping("/brand")
 	public BrandDto insert(@RequestBody @Valid BrandDto brandDto) throws InvalidInputException {

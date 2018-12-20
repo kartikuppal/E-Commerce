@@ -15,7 +15,6 @@ import com.infogain.app.repository.IBrandRepo;
 
 @Service
 public class BrandServiceImpl implements IBrandService{
-
 	@Autowired
 	private IBrandRepo brandRepo;
 	
@@ -60,8 +59,9 @@ public class BrandServiceImpl implements IBrandService{
 			brandDto = entityToDtoAssembler(brandDto, brand);
 			brandDtoList.add(brandDto);
 			
-			logger.info("display>>>>>>>>>>>>");
 		}
+		logger.info("Brand count"+ brandDtoList.size());
+
 		return brandDtoList;
 	}
 	

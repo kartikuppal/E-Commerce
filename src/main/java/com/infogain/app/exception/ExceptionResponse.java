@@ -11,6 +11,7 @@ public class ExceptionResponse {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime timestamp;
 	private HttpStatus status;
+	private Integer errorCode;
 	private String error;
 	private String errorMessage;
 	private String requestedURI;
@@ -21,11 +22,12 @@ public class ExceptionResponse {
 		timestamp = LocalDateTime.now();
 	}
 
-	public ExceptionResponse(LocalDateTime timestamp, HttpStatus status, String error, String errorMessage,
-			String requestedURI) {
+	public ExceptionResponse(LocalDateTime timestamp, HttpStatus status, Integer errorCode, String error,
+			String errorMessage, String requestedURI) {
 		super();
 		this.timestamp = timestamp;
 		this.status = status;
+		this.errorCode = errorCode;
 		this.error = error;
 		this.errorMessage = errorMessage;
 		this.requestedURI = requestedURI;
@@ -36,7 +38,6 @@ public class ExceptionResponse {
 		this.timestamp = timestamp;
 		this.errorMessage = errorMessage;
 		this.requestedURI = requestedURI;
-		this.errors = errors;
 	}
 
 	public LocalDateTime getTimestamp() {
@@ -53,6 +54,14 @@ public class ExceptionResponse {
 
 	public void setStatus(HttpStatus status) {
 		this.status = status;
+	}
+	
+	public Integer getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(Integer errorCode) {
+		this.errorCode = errorCode;
 	}
 
 	public String getError() {
@@ -87,7 +96,7 @@ public class ExceptionResponse {
 		this.errors = errors;
 	}
 	
-	/*dont remove below this*/
+	/*dont remove below this because this for the list of errors*/
 	public void callerURL(final String requestedURI) {
 		this.requestedURI = requestedURI;
 	}

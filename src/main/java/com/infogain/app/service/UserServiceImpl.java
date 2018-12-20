@@ -2,17 +2,11 @@ package com.infogain.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
 import java.util.UUID;
-import javax.mail.BodyPart;
-import javax.mail.Message;
+
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import com.infogain.app.dto.StoreDto;
 
 import com.infogain.app.dto.UserDto;
-import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
-import com.infogain.app.repository.IStoreRepo;
 import com.infogain.app.repository.IUserRepo;
 
 @Service
@@ -38,8 +29,6 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserRepo userRepo;
 	@Autowired
-	private IStoreRepo storeRepo;
-	@Autowired
 	JavaMailSender mailSender;
 
 	public void activation(Integer id) {
@@ -49,11 +38,14 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	public String sendMail(String userName, String password, String name, Integer id) {
+		//String from = "e.commerce0005@gmail.com";
+		
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-		BodyPart messageBodyPart = new MimeBodyPart();
+		//BodyPart messageBodyPart = new MimeBodyPart();
 		try {
-
+			//email message message.setFrom(new InternetAddress(from,"E-Commerce Application"));
+			message.setFrom(new InternetAddress());
 			message.setContent("<h1>Registeration Successfull !</h1>"
 
 					+ "YOUR ACCOUNT IS READY<br><br><br>Hello " + name + "   ,<br><br>"
@@ -126,7 +118,6 @@ public class UserServiceImpl implements IUserService {
 			userDtoList.add(userDto);
 			
 			logger.info("display>>>>>>>>>>>>");
-			
 		}
 		return userDtoList;
 	}
@@ -148,7 +139,6 @@ public class UserServiceImpl implements IUserService {
 			userRepo.save(user);
 			userDto.setId(user.getId());
 			sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
-			
 		} catch (Exception e) {
 			throw new InvalidInputException(e.toString());
 		}

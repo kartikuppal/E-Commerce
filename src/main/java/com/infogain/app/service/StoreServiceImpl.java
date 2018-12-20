@@ -3,16 +3,14 @@ package com.infogain.app.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.infogain.app.dto.StoreDto;
 import com.infogain.app.entity.Store;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.repository.IStoreRepo;
 
@@ -44,14 +42,18 @@ public class StoreServiceImpl implements IStoreService {
 
 	/*inserting value*/
 	
-	public StoreDto insert(StoreDto storeDto) throws InvalidInputException {
-		try {
-			Store store = new Store();
-			store = dtoToEntityAssembler(storeDto, store);
-			storeRepo.save(store);
-			storeDto.setId(store.getId());
-		} catch (Exception e) {
-			throw new InvalidInputException(e.toString());
+	public StoreDto insert(StoreDto storeDto) throws InvalidInputException, CustomException {
+		if(storeDto.getId() == null) {
+			try {
+				Store store = new Store();
+				store = dtoToEntityAssembler(storeDto, store);
+				storeRepo.save(store);
+				storeDto.setId(store.getId());
+			} catch (Exception e) {
+				throw new InvalidInputException(404,"contact number must be unique");
+			}
+		} else {
+			throw new InvalidInputException(404,"you are not allowed to enter ids");
 		}
 		return storeDto;
 	}

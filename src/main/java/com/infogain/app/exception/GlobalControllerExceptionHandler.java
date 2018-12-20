@@ -1,7 +1,6 @@
 package com.infogain.app.exception;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,10 +27,20 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public final ResponseEntity<Object> handleInvalidInputException(InvalidInputException exception, 
 			WebRequest request) {
-		int statusCode = 400;
 		
-		ExceptionResponse error = new ExceptionResponse( LocalDateTime.now(), HttpStatus.valueOf(statusCode),
-				"Validation Failed", "Unique Value Exception", exception.toString()); 
+		ExceptionResponse error = new ExceptionResponse( LocalDateTime.now(), HttpStatus.valueOf(exception.getCode()),
+				exception.getCode(),"Validation Failed", "invalid input Exception", exception.getMessage()); 
+		
+		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+		  }
+	
+	@ExceptionHandler(CustomException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public final ResponseEntity<Object> handleInvalidInputException(CustomException exception, 
+			WebRequest request) {
+		
+		ExceptionResponse error = new ExceptionResponse( LocalDateTime.now(), HttpStatus.valueOf(exception.getCode()),
+				exception.getCode(),"Validation Failed", "Unique Value Exception", exception.getMessage()); 
 		
 		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
 		  }
@@ -46,23 +55,25 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		ExceptionResponse error = new ExceptionResponse();
 		error.setTimestamp(LocalDateTime.now());
 		error.setStatus(HttpStatus.valueOf(statusCode));
+		error.setErrorCode(statusCode);
 		error.setError("Validation Failed");
 		error.setErrorMessage(exception.getMessage());
 		error.callerURL(request.getRequestURI());
 		error.setErrors(ValidationUtil.fromBindingErrors(result));
 		
 		return error;
-	}
+		}
 	
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, 
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		int statusCode = 400;
+		Integer statusCode = 400;
 		BindingResult result = exception.getBindingResult();
+		// (this is the error url ->) exception.getBindingResult().toString()
 		
 		ExceptionResponse error = new ExceptionResponse(LocalDateTime.now(), HttpStatus.valueOf(statusCode), 
-				"Validation Failed","Invalid Input",exception.getBindingResult().toString()); 
+				statusCode,"Validation Failed","Invalid Input","null values are not allowed"); 
 		error.setErrors(ValidationUtil.fromBindingErrors(result));
 		
 		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
-		  }
+		}
 }

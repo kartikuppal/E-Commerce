@@ -16,16 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.ProductDto;
 import com.infogain.app.exception.InvalidInputException;
-import com.infogain.app.repository.IProductRepo;
 import com.infogain.app.service.ProductServiceImpl;
 
 @RestController
 @RequestMapping("/api")
 public class ProductController {
 	@Autowired
-	IProductRepo productRepo;
-	@Autowired
-	ProductServiceImpl productService;
+	private ProductServiceImpl productService;
 	
 	@PostMapping("/product")
 	public ProductDto insert(@RequestBody @Valid ProductDto productDto) throws InvalidInputException {

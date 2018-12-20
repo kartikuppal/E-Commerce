@@ -1,7 +1,9 @@
 package com.infogain.app.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.infogain.app.dto.UserDto;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
-import com.infogain.app.repository.IUserRepo;
 import com.infogain.app.service.UserServiceImpl;
 
 @RestController
@@ -23,23 +24,17 @@ import com.infogain.app.service.UserServiceImpl;
 public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
-	@Autowired
-	private IUserRepo userRepo;
-
+	
 	@GetMapping("/activateAccount/{id}")
-	public String activeUser(@PathVariable(value = "id") Integer userId)
-	{
+	public String activeUser(@PathVariable(value = "id") Integer userId) {
 		userService.activation(userId);
 		return "Your Account is Activated !!!";
-		
 	}
 	
 	@GetMapping("/user")
 	public List<UserDto> displayAll() {
 		return userService.getAll();
 	}
-	
-
 
 	@GetMapping("/user/{id}")
 	public UserDto getById(@PathVariable(value = "id") Integer userId, @RequestHeader(value = "userName") String userName,
@@ -53,7 +48,6 @@ public class UserController {
 			throw new CustomException("Login Error");
 		}
 		return userDto;
-
 	}
 
 	@PostMapping("/user")
