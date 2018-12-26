@@ -70,7 +70,7 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		// (this is the error url ->) exception.getBindingResult().toString()
 		
 		ExceptionResponse error = new ExceptionResponse(LocalDateTime.now(), HttpStatus.valueOf(statusCode), 
-				statusCode,"Validation Failed","Invalid Input","null values are not allowed"); 
+				statusCode,"Validation Failed","Invalid Input","null values and incorrect format not allowed"); 
 		error.setErrors(ValidationUtil.fromBindingErrors(result));
 		
 		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);

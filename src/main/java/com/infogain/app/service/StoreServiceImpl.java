@@ -50,7 +50,7 @@ public class StoreServiceImpl implements IStoreService {
 				storeRepo.save(store);
 				storeDto.setId(store.getId());
 			} catch (Exception e) {
-				throw new InvalidInputException(404,"contact number must be unique");
+				throw new CustomException(404,"contact number must be unique");
 			}
 		} else {
 			throw new InvalidInputException(404,"you are not allowed to enter ids");

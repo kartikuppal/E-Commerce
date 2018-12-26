@@ -40,13 +40,10 @@ public class UserServiceImpl implements IUserService {
 	}
 	@Override
 	public String sendMail(String userName, String password, String name, Integer id) {
-		//String from = "e.commerce0005@gmail.com";
 		
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-		//BodyPart messageBodyPart = new MimeBodyPart();
 		try {
-			//email message message.setFrom(new InternetAddress(from,"E-Commerce Application"));
 			message.setFrom(new InternetAddress());
 			message.setContent("<h1>Registeration Successfull !</h1>"
 
