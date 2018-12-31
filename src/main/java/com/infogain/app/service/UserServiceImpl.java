@@ -80,7 +80,7 @@ public class UserServiceImpl implements IUserService {
 		userDto.setPassword(user.getPassword());
 		userDto.setPostalCode(user.getPostalCode());
 		userDto.setName(user.getName());
-		userDto.setStatus(user.getStatus());
+		userDto.setStatus((byte) user.getStatus());
 
 		return userDto;
 	}

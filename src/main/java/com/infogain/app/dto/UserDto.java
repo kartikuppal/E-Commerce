@@ -39,20 +39,20 @@ public class UserDto {
 	@NotNull(message="Mobile number cannot be null")
 	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String mobileNumber;
-	private int status;
+	private Byte status;
 	
 	private List<Store> store;
 
 	public UserDto() {
 	}
-	
-	public UserDto(Integer id, @NotNull(message = "Password cannot be null") String password,
+
+	public UserDto(Integer id, @Size(min = 8, max = 15) String password,
 			@NotNull(message = "Name cannot be null") @Size(min = 2, max = 50) String name,
 			@NotNull(message = "email cannot be null") @Email(message = "email should be in correct format") @Size(min = 2, max = 50) String email,
 			@NotNull(message = "Address cannot be blank") @Size(min = 10, max = 255) String address,
-			@NotNull(message = "postal Code cannot be null") @Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format") String postalCode,
+			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) @Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format") String postalCode,
 			@NotNull(message = "Mobile number cannot be null") @Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format") String mobileNumber,
-			@NotNull(message = "status cannot be null") int status, List<Store> store) {
+			Byte status, List<Store> store) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -120,12 +120,12 @@ public class UserDto {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	
-	public int getStatus() {
+
+	public Byte getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Byte status) {
 		this.status = status;
 	}
 
@@ -143,4 +143,6 @@ public class UserDto {
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
 				+ ", store=" + store + "]";
 	}
+	
+
 }
