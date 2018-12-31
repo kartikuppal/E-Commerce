@@ -1,5 +1,6 @@
 package com.infogain.app.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,10 @@ public class UserServiceImpl implements IUserService {
 	private IUserRepo userRepo;
 	@Autowired
 	private JavaMailSender mailSender;
-
-
+	
+	@Value("${spring.mail.username}")
+	private String emailFrom;
+	
 	@Override
 	public void activation(Integer id) {
 		User user = userRepo.findById(id).get();
@@ -39,7 +43,7 @@ public class UserServiceImpl implements IUserService {
 		userRepo.save(user);
 	}
 	@Override
-	public String sendMail(String userName, String password, String name, Integer id) {
+	public String sendMail(String userName, String password, String name, Integer id) throws UnsupportedEncodingException {
 		
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -53,6 +57,7 @@ public class UserServiceImpl implements IUserService {
 					+ "<br><br>        Username is :   " + userName + "<br><br>        Password is :   " + password
 					+ "<br><br><body><a href=http://localhost:8083/api/activateAccount/"+id+">Click here to Activate Your Account</a></body>", "text/html");
 			helper.setTo(userName);
+			helper.setFrom(new InternetAddress(emailFrom,"E-Commerce"));
 			helper.setSubject("E-Commerce Registration");
 
 		} catch (MessagingException e) {
@@ -96,13 +101,12 @@ public class UserServiceImpl implements IUserService {
 		User user = userRepo.findById(id).get();
 		String existingEmail = user.getEmail();
 		if (!existingEmail.equals(userName)) {
-			throw new CustomException("User Name does not exist");
+			throw new InvalidInputException(500,"User Name does not exist");
 		} else {
-
 			if (userName.equals(user.getEmail()) && password.equals(user.getPassword())) {
 				loginSuccess = true;
 			} else {
-				throw new CustomException("Login not successfull");
+				throw new InvalidInputException(500,"Login not successfull");
 			}
 		}
 		return loginSuccess;
@@ -132,31 +136,24 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserDto insert(UserDto userDto) throws InvalidInputException {
-		try {
-			User user = new User();
-			if(userDto.getPassword()!=null)
-			{
-				throw new CustomException("User cannot create password");
+	public UserDto insert(UserDto userDto) throws InvalidInputException, CustomException {
+		User user = new User();
+			if(userDto.getPassword() == null || userDto.getId() == null || userDto.getStatus() == 0) {
+				try {
+					userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
+					user = dtoToEntityAssembler(userDto, user);
+					userDto.setStatus(0);
+					userRepo.save(user);
+					userDto.setId(user.getId());
+					sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
+				} catch (Exception e) {
+					throw new InvalidInputException(400,"contact number and email id must be unique");
+				}
 			}
-			else if(userDto.getId()!=null)
+			else
 			{
-				throw new CustomException("User cannot add id");
+				throw new InvalidInputException(400,"you are not allowed to enter id, password and status");
 			}
-			else if(userDto.getStatus()!=null)
-			{
-				throw new CustomException("Status cannot add status ");
-			}
-			
-			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
-			user = dtoToEntityAssembler(userDto, user);
-			userDto.setStatus((byte) 0);
-			userRepo.save(user);
-			userDto.setId(user.getId());
-			sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
-		} catch (Exception e) {
-			throw new InvalidInputException(e.toString());
-		}
 		return userDto;
 	} 
 

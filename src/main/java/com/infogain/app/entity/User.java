@@ -20,7 +20,7 @@ public class User {
 	private String address;
 	private String postalCode;
 	private String mobileNumber;
-	private Byte status;
+	private int status;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Store> store = new ArrayList<>();
@@ -30,7 +30,7 @@ public class User {
 	}
 
 	public User(Integer id, String password, String name, String email, String address, String postalCode,
-			String mobileNumber, Byte status, List<Store> store) {
+			String mobileNumber, int status, List<Store> store) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -107,11 +107,11 @@ public class User {
 		this.store = store;
 	}
 
-	public Byte getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Byte status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

@@ -39,7 +39,7 @@ public class UserDto {
 	@NotNull(message="Mobile number cannot be null")
 	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String mobileNumber;
-	private Byte status;
+	private int status;
 	
 	private List<Store> store;
 
@@ -52,7 +52,7 @@ public class UserDto {
 			@NotNull(message = "Address cannot be blank") @Size(min = 10, max = 255) String address,
 			@NotNull(message = "postal Code cannot be null") @Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format") String postalCode,
 			@NotNull(message = "Mobile number cannot be null") @Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format") String mobileNumber,
-			@NotNull(message = "status cannot be null") Byte status, List<Store> store) {
+			@NotNull(message = "status cannot be null") int status, List<Store> store) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -121,11 +121,11 @@ public class UserDto {
 		this.mobileNumber = mobileNumber;
 	}
 	
-	public Byte getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Byte status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

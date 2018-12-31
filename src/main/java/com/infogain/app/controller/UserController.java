@@ -40,8 +40,9 @@ public class UserController {
 	@GetMapping("/user/{id}")
 	public UserDto getById(@PathVariable(value = "id") Integer userId, @RequestHeader(value = "userName") String userName,
 			@RequestHeader(value = "password") String password) throws CustomException {
-		Boolean loginSuccess = userService.login(userName, password,userId);
 		UserDto userDto = new UserDto();
+		Boolean loginSuccess = userService.login(userName, password,userId);
+		
 		if (loginSuccess == true) {
 			userDto=userService.getById(userId);
 		}
@@ -52,7 +53,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public UserDto insert(@RequestBody @Valid UserDto userDto) throws InvalidInputException {
+	public UserDto insert(@RequestBody @Valid UserDto userDto) throws InvalidInputException, CustomException {
 		return userService.insert(userDto);
 	}
 	
@@ -63,6 +64,9 @@ public class UserController {
 	Boolean loginSuccess = userService.login(userName, password,id);
 	if (loginSuccess == true) {
 	userDto = userService.update(userDto);
+	}
+	else{
+		throw new CustomException("Login Error");
 	}
 	return userDto;
 	}
