@@ -43,10 +43,13 @@ public class UserServiceImpl implements IUserService {
 		userRepo.save(user);
 	}
 	@Override
+
 	public String sendMail(String userName, String password, String name, Integer id) throws UnsupportedEncodingException {
 		
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
+
+
 		try {
 			message.setFrom(new InternetAddress());
 			message.setContent("<h1>Registeration Successfull !</h1>"
@@ -136,24 +139,34 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserDto insert(UserDto userDto) throws InvalidInputException, CustomException {
-		User user = new User();
-			if(userDto.getPassword() == null || userDto.getId() == null || userDto.getStatus() == 0) {
-				try {
-					userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
-					user = dtoToEntityAssembler(userDto, user);
-					userDto.setStatus(0);
-					userRepo.save(user);
-					userDto.setId(user.getId());
-					sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
-				} catch (Exception e) {
-					throw new InvalidInputException(400,"contact number and email id must be unique");
-				}
-			}
-			else
+
+
+	public UserDto insert(UserDto userDto) throws InvalidInputException {
+	
+			if(userDto.getPassword()!=null)
 			{
-				throw new InvalidInputException(400,"you are not allowed to enter id, password and status");
+				throw new InvalidInputException(404,"User cannot create password");
+
 			}
+		
+			else if(userDto.getStatus()!=null)
+			{
+				throw new InvalidInputException(404,"Status cannot add status ");
+			}
+			
+			try {
+				System.out.println("In try block");
+			User user = new User();
+			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
+			user = dtoToEntityAssembler(userDto, user);
+			user.setStatus((byte) 0);
+			userDto.setStatus((byte) 0);
+			userRepo.save(user);
+			userDto.setId(user.getId());
+			sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
+		} catch (Exception e) {
+			throw new InvalidInputException(400,"Email already exist");
+		}
 		return userDto;
 	} 
 
