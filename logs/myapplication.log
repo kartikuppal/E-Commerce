@@ -273,6 +273,7 @@ Verify the connector's configuration, identify and stop any process that's liste
 2018-12-31 10:46:45.793  INFO 6136 --- [http-nio-8083-exec-4] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
 2018-12-31 10:46:53.651  WARN 6136 --- [http-nio-8083-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.infogain.app.exception.InvalidInputException: you are not allowed to enter id, password and status]
 2018-12-31 10:47:15.140  WARN 6136 --- [http-nio-8083-exec-8] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.infogain.app.exception.InvalidInputException: contact number and email id must be unique]
+<<<<<<< HEAD
 =======
 2018-12-28 11:28:22.458  INFO 6896 --- [main] c.i.app.controller.UserControllerTest    : Starting UserControllerTest on KartikUppal with PID 6896 (started by kartik.uppal in D:\STS Projects2\E-Commerce)
 2018-12-28 11:28:22.464  INFO 6896 --- [main] c.i.app.controller.UserControllerTest    : No active profile set, falling back to default profiles: default
@@ -735,6 +736,7 @@ Hints:
 2018-12-28 18:15:00.660  WARN 9344 --- [main] o.s.web.servlet.PageNotFound             : No mapping found for HTTP request with URI [api/user/1] in DispatcherServlet with name ''
 2018-12-28 18:15:01.095  INFO 9344 --- [Thread-4] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@1b5f960a: startup date [Fri Dec 28 18:14:58 IST 2018]; root of context hierarchy
 >>>>>>> update work till 31 Dec
+<<<<<<< HEAD
 2018-12-31 12:09:21.541  INFO 2808 --- [main] com.infogain.app.ECommerceApplication    : Starting ECommerceApplication on KartikUppal with PID 2808 (started by kartik.uppal in D:\STS Projects2\E-Commerce)
 2018-12-31 12:09:21.541  INFO 2808 --- [main] com.infogain.app.ECommerceApplication    : No active profile set, falling back to default profiles: default
 2018-12-31 12:09:21.572  INFO 2808 --- [main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7e0b85f9: startup date [Mon Dec 31 12:09:21 IST 2018]; root of context hierarchy
@@ -959,3 +961,14 @@ Hints:
 2018-12-31 13:46:58.933  INFO 3524 --- [RMI TCP Connection(68)-172.18.73.228] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2018-12-31 13:46:58.934  INFO 3524 --- [RMI TCP Connection(68)-172.18.73.228] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2018-12-31 13:46:58.943  INFO 3524 --- [RMI TCP Connection(68)-172.18.73.228] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+=======
+=======
+2018-12-31 11:01:26.592  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2018-12-31 11:01:26.593  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] ConfigServletWebServerApplicationContext : Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@635eaaf1: startup date [Mon Dec 31 10:45:28 IST 2018]; root of context hierarchy
+2018-12-31 11:01:26.595  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-12-31 11:01:26.596  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans
+2018-12-31 11:01:26.600  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-12-31 11:01:26.601  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2018-12-31 11:01:26.605  INFO 6136 --- [RMI TCP Connection(2)-172.18.73.24] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+>>>>>>> log file added
+>>>>>>> 303b7ec2fa9e001ea7796463faf5aab00337870a
