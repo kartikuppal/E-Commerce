@@ -3,7 +3,6 @@ package com.infogain.app.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -116,6 +115,14 @@ public class User {
 
 	public void setStatus(Byte status) {
 		this.status = status;
+	}
+	
+	public String getForgetPasswordToken() {
+		return forgetPasswordToken;
+	}
+
+	public void setForgetPasswordToken(String forgetPasswordToken) {
+		this.forgetPasswordToken = forgetPasswordToken;
 	}
 
 	@Override

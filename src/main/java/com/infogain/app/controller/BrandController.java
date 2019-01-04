@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.infogain.app.dto.BrandDto;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.service.BrandServiceImpl;
-import com.infogain.app.entity.Brand;
-import com.infogain.app.exception.CustomException;
-import com.infogain.app.repository.IBrandRepo;
-import com.infogain.app.service.BrandService;
 
 @RestController
 @RequestMapping("/api")

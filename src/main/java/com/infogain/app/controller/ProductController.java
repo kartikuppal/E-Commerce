@@ -21,7 +21,6 @@ import com.infogain.app.service.ProductServiceImpl;
 @RestController
 @RequestMapping("/api")
 public class ProductController {
-
 	@Autowired
 	private ProductServiceImpl productService;
 	

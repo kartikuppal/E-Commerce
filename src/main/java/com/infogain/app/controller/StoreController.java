@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +19,6 @@ import com.infogain.app.dto.StoreDto;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.service.StoreServiceImpl;
-import com.infogain.app.entity.Store;
-import com.infogain.app.exception.CustomException;
-import com.infogain.app.repository.IStoreRepo;
-import com.infogain.app.service.StoreService;
 
 @RestController
 @RequestMapping("/api")

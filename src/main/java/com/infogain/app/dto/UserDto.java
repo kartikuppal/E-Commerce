@@ -138,6 +138,14 @@ public class UserDto {
 		this.store = store;
 	}
 
+	public String getForgetPasswordToken() {
+		return forgetPasswordToken;
+	}
+
+	public void setForgetPasswordToken(String forgetPasswordToken) {
+		this.forgetPasswordToken = forgetPasswordToken;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="

@@ -2,10 +2,6 @@ package com.infogain.app.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.infogain.app.dto.ProductDto;
 import com.infogain.app.exception.InvalidInputException;
 

@@ -18,10 +18,6 @@ import com.infogain.app.dto.CategoryDto;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.service.CategoryServiceImpl;
-import com.infogain.app.entity.Category;
-import com.infogain.app.exception.CustomException;
-import com.infogain.app.repository.ICategoryRepo;
-import com.infogain.app.service.CategoryService;
 
 @RestController
 @RequestMapping("/api")
