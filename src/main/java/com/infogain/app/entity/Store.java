@@ -17,8 +17,21 @@ public class Store {
 	private Integer id;
 	private String name;
 	private String address;
+<<<<<<< HEAD
 	private String postalCode;
 	private String contactNo;
+=======
+	
+	@NotNull
+	//@Size(min=6,max=6)
+	@Column(length=6)
+	private Integer postalCode;
+	
+	@NotNull
+	//@Size(min=10,max=10)
+	@Column(unique=true,length=10)
+	private BigInteger contactNo;
+>>>>>>> 7dd7faed42c06206121171f492f4016151683369
 
 	@ManyToMany(fetch=FetchType.EAGER)
 	List<Product> product = new ArrayList<>();

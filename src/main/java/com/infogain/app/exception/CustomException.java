@@ -2,6 +2,7 @@ package com.infogain.app.exception;
 
 public class CustomException extends Exception {
 	private static final long serialVersionUID = 1L;
+<<<<<<< HEAD
 	
 	private Integer code;
 	private String message;
@@ -32,5 +33,10 @@ public class CustomException extends Exception {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+=======
+
+	public CustomException(String message) {
+		super(message);
+>>>>>>> 7dd7faed42c06206121171f492f4016151683369
 	}
 }
