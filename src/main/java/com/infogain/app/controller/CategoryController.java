@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogain.app.dto.CategoryDto;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.service.CategoryServiceImpl;
 
@@ -25,7 +26,7 @@ public class CategoryController {
 	private CategoryServiceImpl categoryService;
 	
 	@PostMapping("/category")
-	public CategoryDto insert(@RequestBody @Valid CategoryDto categoryDto) throws InvalidInputException {
+	public CategoryDto insert(@RequestBody @Valid CategoryDto categoryDto) throws InvalidInputException, CustomException {
 		return categoryService.insert(categoryDto);
 	}
 	
@@ -40,10 +41,10 @@ public class CategoryController {
 	}
 	
 	@PutMapping("/category")
-	public CategoryDto updateCategory(@RequestBody @Valid CategoryDto categoryDto) throws InvalidInputException {
+	public CategoryDto updateCategory(@RequestBody @Valid CategoryDto categoryDto) throws InvalidInputException, CustomException {
 		return categoryService.update(categoryDto);
 	}
-
+	
 	@DeleteMapping("/category/{id}")
 	public void deleteCategory(@PathVariable(value = "id") Integer categoryId) {
 		categoryService.delete(categoryId);

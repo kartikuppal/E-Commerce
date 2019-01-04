@@ -2,6 +2,8 @@ package com.infogain.app.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.persistence.OneToMany;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(length=5,columnDefinition="Integer(5) default 0"/*,columnDefinition = "Integer default 1"*/)
 	private Integer id;
 	private String password;
 	private String name;
