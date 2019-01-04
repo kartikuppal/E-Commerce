@@ -14,12 +14,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class User {
 	@Id
-<<<<<<< HEAD
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-=======
-	@GeneratedValue(strategy=GenerationType.AUTO)
->>>>>>> 7dd7faed42c06206121171f492f4016151683369
-	@Column(length=5,columnDefinition="Integer(5) default 0"/*,columnDefinition = "Integer default 1"*/)
 	private Integer id;
 	private String password;
 	private String name;
@@ -28,6 +23,7 @@ public class User {
 	private String postalCode;
 	private String mobileNumber;
 	private Byte status;
+	private String forgetPasswordToken;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Store> store = new ArrayList<>();

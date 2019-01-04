@@ -17,14 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Product {
 	@Id
-<<<<<<< HEAD
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-=======
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(length=10,columnDefinition="Integer(5) default 0")
-	private Integer id=1;
->>>>>>> 7dd7faed42c06206121171f492f4016151683369
 	
 	private String name;
 	private Double price;

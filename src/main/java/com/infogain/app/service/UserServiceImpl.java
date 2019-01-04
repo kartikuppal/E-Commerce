@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +43,14 @@ public class UserServiceImpl implements IUserService {
 		user.setStatus((byte) 1);
 		userRepo.save(user);
 	}
+	
+	
+	public void forgetPassword(String email)
+	{
+		
+		
+	}
 	@Override
-
 	public String sendMail(String userName, String password, String name, Integer id) throws UnsupportedEncodingException {
 		
 		MimeMessage message = mailSender.createMimeMessage();
@@ -52,8 +59,8 @@ public class UserServiceImpl implements IUserService {
 
 		try {
 			message.setFrom(new InternetAddress());
+			String uri = "";
 			message.setContent("<h1>Registeration Successfull !</h1>"
-
 					+ "YOUR ACCOUNT IS READY<br><br><br>Hello " + name + "   ,<br><br>"
 					+ "Thank You for registering in E-Commerce where you can spread your"
 					+ " buissness in every corner of the country. Below are your" + " credentials for login."
@@ -130,6 +137,7 @@ public class UserServiceImpl implements IUserService {
 		return userDtoList;
 	}
 
+	
 	@Override
 	public UserDto getById(Integer id) {
 		UserDto userDto = new UserDto();
@@ -155,7 +163,6 @@ public class UserServiceImpl implements IUserService {
 			}
 			
 			try {
-				System.out.println("In try block");
 			User user = new User();
 			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
 			user = dtoToEntityAssembler(userDto, user);

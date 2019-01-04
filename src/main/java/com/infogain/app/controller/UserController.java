@@ -23,7 +23,8 @@ import com.infogain.app.service.UserServiceImpl;
 public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
-
+    
+	
 	@GetMapping("/userActive/{id}")
 	public String activeUser(@PathVariable(value = "id") Integer userId)
 	{
@@ -31,10 +32,12 @@ public class UserController {
 		return "Your Account is Activated !!!";
 	}
 	
+	
 	@GetMapping("/user")
 	public List<UserDto> getAll() {
 		return userService.getAll();
 	}
+	
 
 	@GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserDto getById(@PathVariable(value = "id") Integer userId, @RequestHeader(value = "userName") String userName,

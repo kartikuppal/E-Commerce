@@ -14,12 +14,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Category {
 	@Id
-<<<<<<< HEAD
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-=======
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(length=5)
->>>>>>> 7dd7faed42c06206121171f492f4016151683369
 	private Integer id;
 	private String name;
 	private String description;
