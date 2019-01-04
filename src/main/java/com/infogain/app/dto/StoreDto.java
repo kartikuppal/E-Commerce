@@ -1,5 +1,7 @@
 package com.infogain.app.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -23,56 +25,61 @@ public class StoreDto {
 	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String contactNo;
 	
-	/*private List<Integer> productId;
-	
-	private List<Integer> categoryId;*/
-	
-	public StoreDto() {
-		super();
-	}
-	public StoreDto(Integer id, String name, String address, String postalCode, String contactNo) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.postalCode = postalCode;
-		this.contactNo = contactNo;
-	}
-	
+	private List<Integer> productId;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getPostalCode() {
 		return postalCode;
 	}
+
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
+
 	public String getContactNo() {
 		return contactNo;
 	}
+
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
-	
+
+	public List<Integer> getProductId() {
+		return productId;
+	}
+
+	public void setProductId(List<Integer> productId) {
+		this.productId = productId;
+	}
+
 	@Override
 	public String toString() {
 		return "StoreDto [id=" + id + ", name=" + name + ", address=" + address + ", postalCode=" + postalCode
-				+ ", contactNo=" + contactNo + "]";
+				+ ", contactNo=" + contactNo + ", productId=" + productId + "]";
 	}
+
+	
 }

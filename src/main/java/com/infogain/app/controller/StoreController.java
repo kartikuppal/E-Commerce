@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,27 +27,27 @@ public class StoreController {
 	private StoreServiceImpl storeService;
 	
 	@PostMapping("/store")
-	public StoreDto insertStore(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException, CustomException {
+	public StoreDto insert(@RequestBody @Valid StoreDto storeDto) throws InvalidInputException, CustomException {
 		return storeService.insert(storeDto);
 	}
 	
-	@GetMapping("/store")
-	public List<StoreDto> displayAllStores(@RequestBody StoreDto storeDto) {
+	@GetMapping(value = "/store")
+	public List<StoreDto> getAll() {
 		return storeService.displayAll();
 	}
 	
-	@GetMapping("/store/{id}")
-	public StoreDto displayStoreById(@PathVariable(value = "id") Integer storeId) {
+	@GetMapping(value = "/store/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public StoreDto getById(@PathVariable(value = "id") Integer storeId) {
 		return storeService.displayById(storeId);
 	}
 	
 	@PutMapping("/store")
-	public StoreDto updateStore(@RequestBody StoreDto storeDto) throws InvalidInputException {
+	public StoreDto update(@RequestBody StoreDto storeDto) throws InvalidInputException {
 		return storeService.update(storeDto);
 	}
 	
 	@DeleteMapping("/store/{id}")
-	public void deleteStore(@PathVariable(value = "id") Integer storeId) {
+	public void delete(@PathVariable(value = "id") Integer storeId) {
 		storeService.delete(storeId);
 	}
 }
