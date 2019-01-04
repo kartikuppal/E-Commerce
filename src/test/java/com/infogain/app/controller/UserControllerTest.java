@@ -1,8 +1,6 @@
 package com.infogain.app.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +22,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,9 +40,53 @@ public class UserControllerTest {
 	private MockMvc mockMvc;
 	@MockBean
 	private UserServiceImpl userService;
-
+	
+	public UserDto setValues(UserDto userDto)
+	{
+		userDto.setId(1);
+		userDto.setAddress("address hhhhhh");
+		userDto.setEmail("email@gmail.com");
+		userDto.setName("name");
+		userDto.setMobileNumber("9874563210");
+		userDto.setStatus((byte) 1);
+		userDto.setPostalCode("143001");
+		userDto.setPassword("user1234");
+		return userDto;
+	}
+	
 	@Test
-	public void create() throws Exception {
+
+	public void create() throws Exception 
+	{
+		 UserDto userDto = new UserDto();
+		 userDto=setValues(userDto);
+		 
+		 String inputInJson = this.mapToJson(userDto);
+		 String uri = "api/user";
+		 Mockito.when(userService.insert(Mockito.any(UserDto.class))).thenReturn(userDto);
+		 
+		 RequestBuilder requestBuilder = MockMvcRequestBuilders
+				 .post("/api/user")
+				 .accept(MediaType.APPLICATION_JSON)
+				 .content(inputInJson)
+				 .contentType(MediaType.APPLICATION_JSON);
+		 
+		 MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		 MockHttpServletResponse response = result.getResponse();
+		 
+		 String outputInJson = response.getContentAsString();
+		 System.out.println(outputInJson);
+		 
+		 //assertEquals(inputInJson, outputInJson);
+		 assertThat(outputInJson).isEqualTo(inputInJson);
+		//assertEquals(HttpStatus.OK.value(), response.getStatus());
+		 
+		 
+	}
+
+/*	@Test
+	public void testGetAll() {
+>>>>>>> testcase
 		UserDto userDto = new UserDto();
 		userDto.setId(1);
 		userDto.setName("anil");
@@ -126,6 +169,7 @@ public class UserControllerTest {
 		String outputInJson = response.getContentAsString();
 		assertThat(outputInJson).isEqualTo(inputInJson);
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
+<<<<<<< HEAD
 	}
 	
 	@Test
@@ -179,6 +223,8 @@ public class UserControllerTest {
 		String outputInJson = result.getResponse().getContentAsString();
 		assertThat(outputInJson).isEqualTo(expectedJson);
 	}
+=======
+	}*/
 
 	private String mapToJson(Object object) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
