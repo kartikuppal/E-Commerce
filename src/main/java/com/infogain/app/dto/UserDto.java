@@ -40,6 +40,7 @@ public class UserDto {
 	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String mobileNumber;
 	private Byte status;
+	private String forgetPasswordToken;
 	
 	private List<Store> store;
 

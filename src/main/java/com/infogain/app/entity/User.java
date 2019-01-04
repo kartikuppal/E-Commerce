@@ -21,6 +21,7 @@ public class User {
 	private String postalCode;
 	private String mobileNumber;
 	private Byte status;
+	private String forgetPasswordToken;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Store> store = new ArrayList<>();
