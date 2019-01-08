@@ -42,7 +42,7 @@ public class StoreServiceImpl implements IStoreService {
 
 	/*inserting value*/
 	
-	public StoreDto insert(StoreDto storeDto) throws InvalidInputException, CustomException {
+	public StoreDto insert(StoreDto storeDto) throws CustomException {
 		if(storeDto.getId() == null) {
 			try {
 				Store store = new Store();
@@ -53,7 +53,7 @@ public class StoreServiceImpl implements IStoreService {
 				throw new CustomException(404,"contact number must be unique");
 			}
 		} else {
-			throw new InvalidInputException(404,"you are not allowed to enter ids");
+			throw new CustomException(404,"you are not allowed to enter ids");
 		}
 		return storeDto;
 	}

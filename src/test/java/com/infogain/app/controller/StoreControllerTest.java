@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infogain.app.dto.StoreDto;
+import com.infogain.app.exception.CustomException;
 import com.infogain.app.service.StoreServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -63,7 +64,7 @@ public class StoreControllerTest {
 		assertThat(outputInJson).isEqualTo(inputInJson);
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
-	@Test
+	@Test(expected = CustomException.class)
 	public void create2() throws Exception {
 		StoreDto storeDto = new StoreDto();
 		storeDto.setId(null);
@@ -74,7 +75,8 @@ public class StoreControllerTest {
 		
 		String inputInJson = this.mapToJson(storeDto);
 		
-		Mockito.when(storeService.insert(Mockito.any(StoreDto.class))).thenReturn(storeDto);
+		//Mockito.when(storeService.insert(Mockito.any(StoreDto.class))).thenReturn(storeDto);
+		Mockito.when(storeService.insert(Mockito.any(StoreDto.class))).thenThrow(new CustomException(404,"contact number must be unique"));
 
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders
 				.post("/api/store")
