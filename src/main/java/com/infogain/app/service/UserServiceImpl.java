@@ -58,13 +58,12 @@ public class UserServiceImpl implements IUserService {
 
 		try {
 			message.setFrom(new InternetAddress());
-			String uri = "";
 			message.setContent("<h1>Registeration Successfull !</h1>"
 					+ "YOUR ACCOUNT IS READY<br><br><br>Hello " + name + "   ,<br><br>"
 					+ "Thank You for registering in E-Commerce where you can spread your"
 					+ " buissness in every corner of the country. Below are your" + " credentials for login."
 					+ "<br><br>        Username is :   " + userName + "<br><br>        Password is :   " + password
-					+ "<br><br><body><a href=http://localhost:8083/api/activateAccount/"+id+">Click here to Activate Your Account</a></body>", "text/html");
+					+ "<br><br><body><a href=http://localhost:8083/api/userActivation/"+id+">Click here to Activate Your Account</a></body>", "text/html");
 			helper.setTo(userName);
 			helper.setFrom(new InternetAddress(emailFrom,"E-Commerce"));
 			helper.setSubject("E-Commerce Registration");
@@ -171,7 +170,7 @@ public class UserServiceImpl implements IUserService {
 			userDto.setId(user.getId());
 			sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
 		} catch (Exception e) {
-			throw new InvalidInputException(400,"Email already exist");
+			throw new InvalidInputException(400,"Something went Wrong");
 		}
 		return userDto;
 	} 

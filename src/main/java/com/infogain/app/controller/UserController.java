@@ -25,7 +25,7 @@ public class UserController {
 	private UserServiceImpl userService;
     
 	
-	@GetMapping("/userActive/{id}")
+	@GetMapping("/userActivation/{id}")
 	public String activeUser(@PathVariable(value = "id") Integer userId)
 	{
 		userService.activation(userId);
@@ -55,7 +55,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public UserDto insert(@RequestBody @Valid UserDto userDto) throws InvalidInputException, CustomException {
+	public UserDto insert(@RequestBody UserDto userDto){
 		return userService.insert(userDto);
 	}
 	
