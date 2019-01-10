@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.infogain.app.dto.UserDto;
 import com.infogain.app.exception.CustomException;
-import com.infogain.app.exception.InvalidInputException;
 import com.infogain.app.service.UserServiceImpl;
 
 @RestController

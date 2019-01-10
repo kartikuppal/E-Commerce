@@ -10,4 +10,5 @@ public interface IStoreRepo extends JpaRepository<Store, Integer>{
 	Store findByContactNo(String contactNo);
 	List<Store> findAllByIdIn(List<Integer> ids);
 	void save(StoreDto storeDto);
+	Object findOne(int i);
 }

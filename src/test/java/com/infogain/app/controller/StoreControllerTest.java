@@ -64,7 +64,7 @@ public class StoreControllerTest {
 		assertThat(outputInJson).isEqualTo(inputInJson);
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
-	@Test(expected = CustomException.class)
+	@Test//(expected = CustomException.class)
 	public void create2() throws Exception {
 		StoreDto storeDto = new StoreDto();
 		storeDto.setId(null);
