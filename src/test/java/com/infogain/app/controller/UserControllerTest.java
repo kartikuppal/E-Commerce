@@ -68,8 +68,6 @@ public class UserControllerTest {
 		System.out.println(userDto);
 		String inputInJson = this.mapToJson(userDto);
 		Mockito.when(userService.insert(Mockito.any(UserDto.class))).thenReturn(userDto);
-		// Mockito.when(userService.insert(Mockito.any(UserDto.class))).thenThrow(new
-		// InvalidInputException());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/user")
 				.accept(MediaType.APPLICATION_JSON)
 				.content(inputInJson)
@@ -90,8 +88,6 @@ public class UserControllerTest {
 		String inputInJson = null;
 		inputInJson = this.mapToJson(userDto);
 		Mockito.when(userService.insert(Mockito.any(UserDto.class))).thenReturn(userDto);
-		// Mockito.when(userService.insert(Mockito.any(UserDto.class))).thenThrow(new
-		// InvalidInputException());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/user")
 				.accept(MediaType.APPLICATION_JSON)
 				.content(inputInJson)
@@ -99,7 +95,7 @@ public class UserControllerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
-		String outputInJson = response.getContentAsString();
+		//String outputInJson = response.getContentAsString();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 
@@ -154,16 +150,14 @@ public class UserControllerTest {
 	public void update() throws Exception {
 		UserDto userDto = new UserDto();
 		userDto = setCorrectValues(userDto);
-
 		String inputInJson = this.mapToJson(userDto);
-
-		Mockito.when(userService.login(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(true);
-		Mockito.when(userService.update(Mockito.any(UserDto.class))).thenReturn(userDto);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("userName", "email@gmail.com");
 		headers.add("password", "user1234");
 
+		Mockito.when(userService.login(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(true);
+		Mockito.when(userService.update(Mockito.any(UserDto.class))).thenReturn(userDto);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/user/1")
 				.accept(MediaType.APPLICATION_JSON)
 				.content(inputInJson)
@@ -172,6 +166,7 @@ public class UserControllerTest {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		MockHttpServletResponse response = result.getResponse();
 		String outputInJson = response.getContentAsString();
+		assertThat(1).isEqualTo(userDto.getId());//This is running beautifully
 		assertThat(outputInJson).isEqualTo(inputInJson);
 
 	}

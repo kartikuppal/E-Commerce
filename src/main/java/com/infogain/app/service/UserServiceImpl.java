@@ -1,18 +1,22 @@
 package com.infogain.app.service;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -31,7 +35,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserRepo userRepo;
 	@Autowired
-	private JavaMailSender mailSender;
+	EmailService emailService;
 	
 	@Value("${spring.mail.username}")
 	private String emailFrom;
@@ -43,38 +47,63 @@ public class UserServiceImpl implements IUserService {
 		userRepo.save(user);
 	}
 	
+	public List<UserDto> getActiveUsers()
+	{
+		List<User> userList = userRepo.getActiveUsers();
+		List<UserDto> userDtoList = new ArrayList<>();
+		for (User user : userList) {
+			UserDto userDto = new UserDto();
+			userDto = entityToDtoAssembler(userDto, user);
+			userDtoList.add(userDto);
+		}
+		return userDtoList ;
+	}
+	public List<String> getActiveUserName()
+	{
+		List<String> names =userRepo.getActiveUsersName();
+		return names;
+	}
 	
-	public void forgetPassword(String email)
+	
+	public void forgetPassword(String email, HttpServletRequest request) throws Exception
 	{
 		
+		String token;
+		User user = new User();
+		user = userRepo.findByEmail(email);
 		
-	}
-	@Override
-	public String sendMail(String userName, String password, String name, Integer id) throws UnsupportedEncodingException {
-		
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);
-
-
-		try {
-			message.setFrom(new InternetAddress());
-			message.setContent("<h1>Registeration Successfull !</h1>"
-					+ "YOUR ACCOUNT IS READY<br><br><br>Hello " + name + "   ,<br><br>"
-					+ "Thank You for registering in E-Commerce where you can spread your"
-					+ " buissness in every corner of the country. Below are your" + " credentials for login."
-					+ "<br><br>        Username is :   " + userName + "<br><br>        Password is :   " + password
-					+ "<br><br><body><a href=http://localhost:8083/api/userActivation/"+id+">Click here to Activate Your Account</a></body>", "text/html");
-			helper.setTo(userName);
-			helper.setFrom(new InternetAddress(emailFrom,"E-Commerce"));
-			helper.setSubject("E-Commerce Registration");
-
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			return "Error while sending mail ..";
+		if(user==null)
+		{
+			throw new CustomException("Email does not exist");
 		}
-		mailSender.send(message);
-		return "Mail Sent Success!";
+		else
+		{
+			
+		    token = UUID.randomUUID().toString();
+			user.setForgetPasswordToken(token);
+			userRepo.save(user);
+			emailService.forgetPasswordMail(email, request, token);
+			
+		}		
 	}
+	
+	public String resetPassword(String token, String newPassword)
+	{
+		User user = userRepo.findByForgetPasswordToken(token);
+		if(!token.equals(user.getForgetPasswordToken()))
+		{
+			throw new InvalidInputException(505,"Security Breach !!! Cant change Password");
+		}
+		else 
+		{
+			user.setPassword(newPassword);
+			user.setForgetPasswordToken(null);
+			userRepo.save(user);
+		}
+		return newPassword;
+		
+	}
+	
 
 	@Override
 	public UserDto entityToDtoAssembler(UserDto userDto, User user) {
@@ -110,9 +139,20 @@ public class UserServiceImpl implements IUserService {
 		String existingEmail = user.getEmail();
 		if (!existingEmail.equals(userName)) {
 			throw new InvalidInputException(500,"User Name does not exist");
-		} else {
+		} 
+		else if(user.getStatus()==0)
+		{
+			throw new InvalidInputException(500,"Your Account is not activated yet");
+		}
+		else {
 			if (userName.equals(user.getEmail()) && password.equals(user.getPassword())) {
+				
 				loginSuccess = true;
+				SimpleDateFormat dateFormat = new SimpleDateFormat("E dd-MM-YYYY HH:MM:SS zzz");
+				Date date = new Date();
+				user.setLastLogin(dateFormat.format(date));
+				userRepo.save(user);
+				
 			} else {
 				throw new InvalidInputException(500,"Login not successfull");
 			}
@@ -145,8 +185,6 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-
-
 	public UserDto insert(UserDto userDto) throws InvalidInputException {
 	
 			if(userDto.getPassword()!=null)
@@ -168,7 +206,7 @@ public class UserServiceImpl implements IUserService {
 			userDto.setStatus((byte) 0);
 			userRepo.save(user);
 			userDto.setId(user.getId());
-			sendMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
+			emailService.activeStatusMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(), userDto.getId());
 		} catch (Exception e) {
 			throw new InvalidInputException(400,"Something went Wrong");
 		}

@@ -23,6 +23,7 @@ public class User {
 	private String mobileNumber;
 	private Byte status;
 	private String forgetPasswordToken;
+	private String lastLogin;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Store> store = new ArrayList<>();
@@ -31,8 +32,10 @@ public class User {
 		super();
 	}
 
+
+
 	public User(Integer id, String password, String name, String email, String address, String postalCode,
-			String mobileNumber, Byte status, List<Store> store) {
+			String mobileNumber, Byte status, String forgetPasswordToken, String lastLogin, List<Store> store) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -42,8 +45,12 @@ public class User {
 		this.postalCode = postalCode;
 		this.mobileNumber = mobileNumber;
 		this.status = status;
+		this.forgetPasswordToken = forgetPasswordToken;
+		this.lastLogin = lastLogin;
 		this.store = store;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -124,12 +131,22 @@ public class User {
 	public void setForgetPasswordToken(String forgetPasswordToken) {
 		this.forgetPasswordToken = forgetPasswordToken;
 	}
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
-				+ ", store=" + store + "]";
+				+ ", forgetPasswordToken=" + forgetPasswordToken + ", lastLogin=" + lastLogin + ", store=" + store
+				+ "]";
 	}
+
+
 
 }

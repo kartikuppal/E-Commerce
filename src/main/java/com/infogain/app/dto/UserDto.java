@@ -12,37 +12,37 @@ import com.infogain.app.entity.Store;
 
 public class UserDto {
 	private Integer id;
-	
-	
-	@Size(min=8, max=15)
+
+	@Size(min = 8, max = 15)
 	private String password;
-	
-	@NotNull(message="Name cannot be null")
-	@Size(min=2, max=50)
+
+	@NotNull(message = "Name cannot be null")
+	@Size(min = 2, max = 50)
 	private String name;
-	
-	@NotNull(message="email cannot be null")
+
+	@NotNull(message = "email cannot be null")
 	@Email(message = "email should be in correct format")
-	@Size(min=2, max=50)
+	@Size(min = 2, max = 50)
 	private String email;
-	
-	@NotNull(message="Address cannot be blank")
-	@Size(min=10,max=255)
+
+	@NotNull(message = "Address cannot be blank")
+	@Size(min = 10, max = 255)
 	private String address;
-	
-	@NotNull(message="PostalCode cannot be null")
-	@Size(min=6,max=6)
-	@Column(length=6)
-	@Pattern(regexp="(^[0-9]{6}$)|(^$)", message="Invalid postal Code format")
+
+	@NotNull(message = "PostalCode cannot be null")
+	@Size(min = 6, max = 6)
+	@Column(length = 6)
+	@Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format")
 	private String postalCode;
-	
-	@NotNull(message="Mobile number cannot be null")
-	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
+
+	@NotNull(message = "Mobile number cannot be null")
+	@Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format")
 	private String mobileNumber;
 	private Byte status;
 	private String forgetPasswordToken;
-	
-	private List<Store> store;
+	private String lastLogin;
+
+	private List<Integer> storeId;
 
 	public UserDto() {
 	}
@@ -53,7 +53,7 @@ public class UserDto {
 			@NotNull(message = "Address cannot be blank") @Size(min = 10, max = 255) String address,
 			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) @Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format") String postalCode,
 			@NotNull(message = "Mobile number cannot be null") @Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format") String mobileNumber,
-			Byte status, List<Store> store) {
+			Byte status, String forgetPasswordToken, String lastLogin, List<Integer> storeId) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -63,7 +63,9 @@ public class UserDto {
 		this.postalCode = postalCode;
 		this.mobileNumber = mobileNumber;
 		this.status = status;
-		this.store = store;
+		this.forgetPasswordToken = forgetPasswordToken;
+		this.lastLogin = lastLogin;
+		this.storeId = storeId;
 	}
 
 	public Integer getId() {
@@ -130,12 +132,12 @@ public class UserDto {
 		this.status = status;
 	}
 
-	public List<Store> getStore() {
-		return store;
+	public List<Integer> getStoreId() {
+		return storeId;
 	}
 
-	public void setStore(List<Store> store) {
-		this.store = store;
+	public void setStoreId(List<Integer> storeId) {
+		this.storeId = storeId;
 	}
 
 	public String getForgetPasswordToken() {
@@ -146,12 +148,21 @@ public class UserDto {
 		this.forgetPasswordToken = forgetPasswordToken;
 	}
 
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
-				+ ", store=" + store + "]";
+				+ ", forgetPasswordToken=" + forgetPasswordToken + ", lastLogin=" + lastLogin + ", storeId=" + storeId
+				+ "]";
 	}
-	
 
+	
 }

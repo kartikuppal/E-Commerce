@@ -9,7 +9,6 @@ import com.infogain.app.exception.InvalidInputException;
 
 interface IUserService {
 	void activation(Integer id);
-	String sendMail(String userName, String password, String name, Integer id) throws UnsupportedEncodingException;
 	Boolean login(String userName, String password, Integer id) throws CustomException;
 	List<UserDto> getAll();
 	UserDto getById(Integer id);
