@@ -58,7 +58,7 @@ public class EmailService {
 					+ ">Click here to Reset Password</a></body>", "text/html");
 			helper.setTo(email);
 			helper.setFrom(new InternetAddress(emailFrom, "E-Commerce"));
-			helper.setSubject("E-Commerce Registration");
+			helper.setSubject("Forget password !!");
 
 		} catch (MessagingException e) {
 			e.printStackTrace();

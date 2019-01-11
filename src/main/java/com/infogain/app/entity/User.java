@@ -22,9 +22,9 @@ public class User {
 	private String postalCode;
 	private String mobileNumber;
 	private Byte status;
-	private String forgetPasswordToken;
 	private String lastLogin;
-
+	private String forgetPasswordToken;
+	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Store> store = new ArrayList<>();
 
@@ -45,8 +45,9 @@ public class User {
 		this.postalCode = postalCode;
 		this.mobileNumber = mobileNumber;
 		this.status = status;
-		this.forgetPasswordToken = forgetPasswordToken;
 		this.lastLogin = lastLogin;
+		this.forgetPasswordToken = forgetPasswordToken;
+		
 		this.store = store;
 	}
 

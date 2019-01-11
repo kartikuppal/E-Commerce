@@ -48,8 +48,7 @@ public class UserController {
 	@PostMapping("/forgetPassword")
 	public void forgetPassword(HttpServletRequest request, @RequestHeader("email") String email) throws Exception {
 		userService.forgetPassword(email, request);
-
-	}
+}
 
 	@PostMapping("/forgetPassword/{token}")
 	public void resetPassword(@PathVariable(value = "token") String token,
@@ -65,7 +64,7 @@ public class UserController {
 		return userService.getAll();
 	}
 
-	@GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/user/{id}")
 	public UserDto getById(@PathVariable(value = "id") Integer userId,
 			@RequestHeader(value = "userName") String userName, @RequestHeader(value = "password") String password)
 			throws CustomException {

@@ -39,9 +39,9 @@ public class UserDto {
 	@Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format")
 	private String mobileNumber;
 	private Byte status;
-	private String forgetPasswordToken;
 	private String lastLogin;
-
+	private String forgetPasswordToken;	
+	private List<StoreDto> storeList;
 	private List<Integer> storeId;
 
 	public UserDto() {
@@ -53,7 +53,8 @@ public class UserDto {
 			@NotNull(message = "Address cannot be blank") @Size(min = 10, max = 255) String address,
 			@NotNull(message = "PostalCode cannot be null") @Size(min = 6, max = 6) @Pattern(regexp = "(^[0-9]{6}$)|(^$)", message = "Invalid postal Code format") String postalCode,
 			@NotNull(message = "Mobile number cannot be null") @Pattern(regexp = "(^[1-9]{1}[0-9]{9}$)|(^$)", message = "Invalid Phone Number format") String mobileNumber,
-			Byte status, String forgetPasswordToken, String lastLogin, List<Integer> storeId) {
+			Byte status, String forgetPasswordToken, String lastLogin, List<StoreDto> storeList,
+			List<Integer> storeId) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -65,6 +66,7 @@ public class UserDto {
 		this.status = status;
 		this.forgetPasswordToken = forgetPasswordToken;
 		this.lastLogin = lastLogin;
+		this.storeList = storeList;
 		this.storeId = storeId;
 	}
 
@@ -132,14 +134,6 @@ public class UserDto {
 		this.status = status;
 	}
 
-	public List<Integer> getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(List<Integer> storeId) {
-		this.storeId = storeId;
-	}
-
 	public String getForgetPasswordToken() {
 		return forgetPasswordToken;
 	}
@@ -156,12 +150,28 @@ public class UserDto {
 		this.lastLogin = lastLogin;
 	}
 
+	public List<StoreDto> getStoreList() {
+		return storeList;
+	}
+
+	public void setStoreList(List<StoreDto> storeList) {
+		this.storeList = storeList;
+	}
+
+	public List<Integer> getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(List<Integer> storeId) {
+		this.storeId = storeId;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
-				+ ", forgetPasswordToken=" + forgetPasswordToken + ", lastLogin=" + lastLogin + ", storeId=" + storeId
-				+ "]";
+				+ ", forgetPasswordToken=" + forgetPasswordToken + ", lastLogin=" + lastLogin + ", storeList="
+				+ storeList + ", storeId=" + storeId + "]";
 	}
 
 	
