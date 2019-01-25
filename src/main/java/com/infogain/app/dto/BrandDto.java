@@ -3,6 +3,9 @@ package com.infogain.app.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BrandDto {
 	private Integer id;
 	

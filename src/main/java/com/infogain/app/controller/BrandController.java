@@ -22,7 +22,7 @@ import com.infogain.app.service.BrandServiceImpl;
 @RequestMapping("/api")
 public class BrandController {
 	@Autowired
-    private BrandServiceImpl brandService;
+	private BrandServiceImpl brandService;
 	
 	@PostMapping("/brand")
 	public BrandDto insert(@RequestBody @Valid BrandDto brandDto) throws InvalidInputException {
