@@ -24,7 +24,7 @@ public class StoreDto {
 	@NotNull(message="contact number cannot be null")
 	@Pattern(regexp="(^[1-9]{1}[0-9]{9}$)|(^$)", message="Invalid Phone Number format")
 	private String contactNo;
-	
+	private Integer userId;
 	private List<Integer> productId;
 
 	public Integer getId() {
@@ -66,6 +66,15 @@ public class StoreDto {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
+	
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	public List<Integer> getProductId() {
 		return productId;
@@ -78,8 +87,7 @@ public class StoreDto {
 	@Override
 	public String toString() {
 		return "StoreDto [id=" + id + ", name=" + name + ", address=" + address + ", postalCode=" + postalCode
-				+ ", contactNo=" + contactNo + ", productId=" + productId + "]";
+				+ ", contactNo=" + contactNo + ", userId=" + userId + ", productId=" + productId + "]";
 	}
 
-	
 }

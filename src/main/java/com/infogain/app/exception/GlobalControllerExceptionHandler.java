@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import com.infogain.app.util.ValidationUtil;
 
 @ControllerAdvice
@@ -23,12 +22,12 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 	
 	@ExceptionHandler(InvalidInputException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public final ResponseEntity<Object> handleInvalidInputException(InvalidInputException exception, 
+	public final ResponseEntity<?> handleInvalidInputException(InvalidInputException exception, 
 			WebRequest request) {	
 		ExceptionResponse error = new ExceptionResponse( LocalDateTime.now(), HttpStatus.valueOf(exception.getCode()),
 				exception.getCode(),"Validation Failed", "invalid input Exception", exception.getMessage()); 
 		
-		return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 		  }
 	
 	@ExceptionHandler(CustomException.class)

@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.6.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -25,46 +25,73 @@
 	</properties>
 
 	<dependencies>
+	 
 	<dependency>
-    <groupId>com.sun.mail</groupId>
-    <artifactId>javax.mail</artifactId>
-</dependency>
-	
-	<dependency>
-<groupId>org.springframework.boot</groupId>
-<artifactId>spring-boot-starter-mail</artifactId>
-</dependency>
+            <groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-web</artifactId>
+  		</dependency>
+  		
+  		<!-- <dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-config</artifactId>
+  		</dependency> -->
 
-<!-- https://mvnrepository.com/artifact/junit/junit -->
+<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
 <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.12</version>
-    <scope>test</scope>
-</dependency>
+<groupId>redis.clients</groupId>
+<artifactId>jedis</artifactId>
+</dependency> 
 
-	
-	<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
-<!-- <dependency>
-    <groupId>javax.mail</groupId>
-    <artifactId>javax.mail-api</artifactId>
-    <version>1.6.1</version>
-</dependency> -->
-<!-- https://mvnrepository.com/artifact/com.sun.mail/smtp -->
-<dependency>
-    <groupId>com.sun.mail</groupId>
-    <artifactId>smtp</artifactId>
-    <version>1.4.4</version>
-</dependency>
-<!-- https://mvnrepository.com/artifact/javax.activation/javax.activation-api -->
-<dependency>
-    <groupId>javax.activation</groupId>
-    <artifactId>javax.activation-api</artifactId>
-    <version>1.2.0</version>
-</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency> 
 
-	
-	
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>smtp</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.activation/javax.activation-api -->
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>javax.activation-api</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+
+		<!-- redis dependency -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<!-- <version>1.2.1.RELEASE</version> -->
+		</dependency>
+		<!-- Jedis Driver Library -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<!-- <version>2.4.2</version> -->
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -89,6 +116,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>

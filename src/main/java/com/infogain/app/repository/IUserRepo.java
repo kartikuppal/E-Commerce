@@ -23,4 +23,6 @@ public interface IUserRepo extends JpaRepository<User, Integer> {
 	@Query("SELECT name FROM User u WHERE u.status = 1")
 	List<String> getActiveUsersName();
 	
+	User findByEmailAndPassword(String email, String password);
+	
 }

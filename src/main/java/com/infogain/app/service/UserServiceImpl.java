@@ -11,14 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.infogain.app.dto.StoreDto;
 import com.infogain.app.dto.UserDto;
+import com.infogain.app.entity.Role;
 import com.infogain.app.entity.Store;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
 import com.infogain.app.exception.InvalidInputException;
+import com.infogain.app.repository.IRoleRepo;
 import com.infogain.app.repository.IStoreRepo;
 import com.infogain.app.repository.IUserRepo;
 
@@ -27,6 +30,8 @@ public class UserServiceImpl implements IUserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
+	@Autowired
+	private IRoleRepo roleRepo;
 	@Autowired
 	private IUserRepo userRepo;
 	@Autowired
@@ -37,6 +42,31 @@ public class UserServiceImpl implements IUserService {
 	@Value("${spring.mail.username}")
 	private String emailFrom;
 
+	@Cacheable("first")
+	public Integer getRedis(Integer name)
+	{
+		System.out.println("hello "+ name);
+		return name;
+	}
+	
+	public UserDto login(String userName, String password) throws InvalidInputException
+	{
+		UserDto userDto = new UserDto();
+		User user = userRepo.findByEmail(userName);
+		if(user==null)
+		{
+			throw new InvalidInputException(400,"Email does not exists");
+		}
+		else if(!user.getPassword().equals(password))
+		{
+			throw new InvalidInputException(400,"password does not match");
+		}
+		
+		userDto = entityToDtoAssembler(userDto, user);
+		return userDto;
+		
+	}
+	
 	@Override
 	public void activation(Integer id) {
 		User user = userRepo.findById(id).get();
@@ -164,38 +194,14 @@ public class UserServiceImpl implements IUserService {
 	 * UserDto(); User user = userRepo.findById(id).get(); userDto =
 	 * entityToDtoAssembler(userDto, user); return userDto; }
 	 */
-/*	@Override
-	public UserDto getById(Integer id) {
-		UserDto userDto = new UserDto();
-		User user = userRepo.findById(id).get();
-		userDto = entityToDtoAssembler(userDto, user);
-		List<Integer> ids = new ArrayList<>();
-		ids.add(1);
-		ids.add(2);
-		List<Store> storeList = storeRepo.findAllById(ids);
-
-		List<StoreDto> storeDtoList = new ArrayList<>();
-		for (Store store : storeList) 
-		{
-			StoreDto storeDto = new StoreDto();
-			storeDto.setId(store.getId());
-			storeDto.setName(store.getName());
-			storeDto.setAddress(store.getAddress());
-			storeDto.setPostalCode(store.getPostalCode());
-			storeDto.setContactNo(store.getContactNo());
-			storeDtoList.add(storeDto);
-		}
-
-		userDto.setStoreList(storeDtoList);
-		return userDto;
-	}*/
 	
 	@Override
 	public UserDto getById(Integer id) {
 		UserDto userDto = new UserDto();
 		User user = userRepo.findById(id).get();
 		userDto = entityToDtoAssembler(userDto, user);
-		List<Store> storeList = storeRepo.findAll();
+		
+		/*List<Store> storeList = storeRepo.findAll();
 
 		List<StoreDto> storeDtoList = new ArrayList<>();
 		for (Store store : storeList) 
@@ -208,15 +214,19 @@ public class UserServiceImpl implements IUserService {
 			storeDto.setContactNo(store.getContactNo());
 			storeDtoList.add(storeDto);
 		}
-
-		userDto.setStoreList(storeDtoList);
+		userDto.setStoreList(storeDtoList);*/
 		return userDto;
 	}
 
 	@Override
 	public UserDto insert(UserDto userDto) throws InvalidInputException {
-
-		if (userDto.getPassword() != null) {
+		User user = new User();
+		user = userRepo.findByEmail(userDto.getEmail());
+		if(user != null)
+		{
+			throw new InvalidInputException(404,"UserName already exist");
+		}
+		else if (userDto.getPassword() != null) {
 			throw new InvalidInputException(404, "User cannot create password");
 
 		}
@@ -226,13 +236,19 @@ public class UserServiceImpl implements IUserService {
 		}
 
 		try {
-			User user = new User();
 			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
 			user = dtoToEntityAssembler(userDto, user);
 			user.setStatus((byte) 0);
 			userDto.setStatus((byte) 0);
+			//Setting role as user by default
+			List<Role> roles = new ArrayList<>();
+			List<Integer> ids = new ArrayList<>();
+			ids.add(1);
+			roles = roleRepo.findByIdIn(ids);
+			user.setRole(roles);
 			userRepo.save(user);
 			userDto.setId(user.getId());
+			userDto.setRole(roles);
 			emailService.activeStatusMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(),
 					userDto.getId());
 		} catch (Exception e) {

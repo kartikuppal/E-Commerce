@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -24,18 +25,20 @@ public class User {
 	private Byte status;
 	private String lastLogin;
 	private String forgetPasswordToken;
-	
+
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Store> store = new ArrayList<>();
+	
+	@ManyToMany
+	private List<Role> role;
 
 	public User() {
 		super();
 	}
 
-
-
 	public User(Integer id, String password, String name, String email, String address, String postalCode,
-			String mobileNumber, Byte status, String forgetPasswordToken, String lastLogin, List<Store> store) {
+			String mobileNumber, Byte status, String lastLogin, String forgetPasswordToken, List<Role> role,
+			List<Store> store) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -47,11 +50,9 @@ public class User {
 		this.status = status;
 		this.lastLogin = lastLogin;
 		this.forgetPasswordToken = forgetPasswordToken;
-		
+		this.role = role;
 		this.store = store;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -109,29 +110,14 @@ public class User {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public List<Store> getStore() {
-		return store;
-	}
-
-	public void setStore(List<Store> store) {
-		this.store = store;
-	}
-
-	public int getStatus() {
+	public Byte getStatus() {
 		return status;
 	}
 
 	public void setStatus(Byte status) {
 		this.status = status;
 	}
-	
-	public String getForgetPasswordToken() {
-		return forgetPasswordToken;
-	}
 
-	public void setForgetPasswordToken(String forgetPasswordToken) {
-		this.forgetPasswordToken = forgetPasswordToken;
-	}
 	public String getLastLogin() {
 		return lastLogin;
 	}
@@ -140,14 +126,37 @@ public class User {
 		this.lastLogin = lastLogin;
 	}
 
+	public String getForgetPasswordToken() {
+		return forgetPasswordToken;
+	}
+
+	public void setForgetPasswordToken(String forgetPasswordToken) {
+		this.forgetPasswordToken = forgetPasswordToken;
+	}
+
+	public List<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
+
+	public List<Store> getStore() {
+		return store;
+	}
+
+	public void setStore(List<Store> store) {
+		this.store = store;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
 				+ address + ", postalCode=" + postalCode + ", mobileNumber=" + mobileNumber + ", status=" + status
-				+ ", forgetPasswordToken=" + forgetPasswordToken + ", lastLogin=" + lastLogin + ", store=" + store
-				+ "]";
+				+ ", lastLogin=" + lastLogin + ", forgetPasswordToken=" + forgetPasswordToken + ", role=" + role
+				+ ", store=" + store + "]";
 	}
 
-
-
+	
 }

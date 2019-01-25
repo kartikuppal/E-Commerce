@@ -19,10 +19,11 @@ public class Store {
 	private String address;
 	private String postalCode;
 	private String contactNo;
+	private Integer userId;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	List<Product> product = new ArrayList<>();
-	
+
 	@ManyToMany
 	List<Category> category = new ArrayList<>();
 
@@ -82,6 +83,14 @@ public class Store {
 		this.contactNo = contactNo;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 	public List<Product> getProduct() {
 		return product;
 	}
@@ -101,6 +110,9 @@ public class Store {
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", name=" + name + ", address=" + address + ", postalCode=" + postalCode
-				+ ", contactNo=" + contactNo +", category=" + category + "]";
+				+ ", contactNo=" + contactNo + ", userId=" + userId + ", product=" + product + ", category=" + category
+				+ "]";
 	}
+
+	
 }
