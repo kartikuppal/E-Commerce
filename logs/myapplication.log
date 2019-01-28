@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2019-01-25 11:13:07.262  INFO 10392 --- [RMI TCP Connection(984)-172.18.73.114] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
 2019-01-25 11:13:07.528  INFO 10392 --- [RMI TCP Connection(984)-172.18.73.114] ConfigServletWebServerApplicationContext : Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6ca8564a: startup date [Thu Jan 24 18:57:04 IST 2019]; root of context hierarchy
 2019-01-25 11:13:07.528  INFO 10392 --- [RMI TCP Connection(984)-172.18.73.114] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
@@ -3987,3 +3988,43 @@ java.net.ConnectException: Connection refused: connect
 2019-01-25 19:01:34.900  INFO 10876 --- [http-nio-8083-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
 2019-01-25 19:01:34.921  INFO 10876 --- [http-nio-8083-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 21 ms
 2019-01-25 19:02:00.676  WARN 10876 --- [http-nio-8083-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.infogain.app.exception.InvalidInputException: Invalid token]
+=======
+2019-01-17 00:15:02.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m44s107ms607µs136ns).
+2019-01-17 00:31:28.595  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m47s204ms175µs307ns).
+2019-01-17 00:49:38.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m10s165ms828µs214ns).
+2019-01-17 01:05:41.562  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s836ms457µs512ns).
+2019-01-17 01:22:05.593  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m22s929ms800µs908ns).
+2019-01-17 01:45:32.546  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m55s616ms214µs129ns).
+2019-01-17 02:58:20.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m48s55ms325µs675ns).
+2019-01-17 03:14:18.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m27s342ms26µs384ns).
+2019-01-17 03:35:15.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m57s130ms363µs375ns).
+2019-01-17 03:52:42.578  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m25s961ms80µs433ns).
+2019-01-17 04:08:47.839  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=52s342ms989µs167ns).
+2019-01-17 04:24:46.562  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=58s802ms550µs700ns).
+2019-01-17 04:46:21.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m35s296ms259µs902ns).
+2019-01-17 05:09:18.625  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m26s773ms543µs752ns).
+2019-01-17 05:29:29.609  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m10s409ms662µs13ns).
+2019-01-17 05:46:28.609  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m59s249ms354µs243ns).
+2019-01-17 06:06:13.562  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m44s813ms98µs331ns).
+2019-01-17 06:27:03.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m19s8ms386µs983ns).
+2019-01-17 06:43:53.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m49s388ms645µs324ns).
+2019-01-17 07:01:31.502  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m8s94ms779µs871ns).
+2019-01-17 07:17:26.562  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=54s934ms274µs542ns).
+2019-01-17 07:50:40.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m44s295ms12µs646ns).
+2019-01-17 08:07:06.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m55s802ms349µs292ns).
+2019-01-17 08:23:54.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m18s219ms820µs682ns).
+2019-01-17 08:42:37.626  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m43s377ms121µs120ns).
+2019-01-17 08:58:42.500  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m33s659ms196µs496ns).
+2019-01-17 09:14:50.562  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m8s377ms966µs201ns).
+2019-01-17 09:35:19.562  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59s338ms249µs660ns).
+2019-01-17 09:55:58.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m8s919ms777µs322ns).
+2019-01-17 10:12:09.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m10s836ms192µs923ns).
+2019-01-17 10:27:55.515  WARN 5288 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m10s295ms13µs929ns).
+2019-01-17 10:45:59.439  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2019-01-17 10:45:59.441  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] ConfigServletWebServerApplicationContext : Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7e0b85f9: startup date [Wed Jan 16 17:10:42 IST 2019]; root of context hierarchy
+2019-01-17 10:45:59.490  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2019-01-17 10:45:59.492  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans
+2019-01-17 10:45:59.739  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-01-17 10:45:59.818  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2019-01-17 10:45:59.984  INFO 5288 --- [RMI TCP Connection(2)-172.18.73.11] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+>>>>>>> updated files

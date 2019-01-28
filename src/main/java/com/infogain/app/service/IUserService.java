@@ -1,6 +1,5 @@
 package com.infogain.app.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import com.infogain.app.dto.UserDto;
 import com.infogain.app.entity.User;

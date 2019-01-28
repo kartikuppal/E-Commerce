@@ -234,6 +234,10 @@ public class UserServiceImpl implements IUserService {
 		else if (userDto.getStatus() != null) {
 			throw new InvalidInputException(404, "Status cannot add status ");
 		}
+		
+		else if (userDto.getId() != null) {
+			throw new InvalidInputException(404, "you can not enter id");
+		}
 
 		try {
 			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
@@ -247,10 +251,12 @@ public class UserServiceImpl implements IUserService {
 			roles = roleRepo.findByIdIn(ids);
 			user.setRole(roles);
 			userRepo.save(user);
+			
 			userDto.setId(user.getId());
 			userDto.setRole(roles);
 			emailService.activeStatusMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(),
 					userDto.getId());
+			emailService.activeStatusMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(),userDto.getId());
 		} catch (Exception e) {
 			throw new InvalidInputException(400, "Something went Wrong");
 		}
