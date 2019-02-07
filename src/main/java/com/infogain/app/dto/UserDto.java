@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infogain.app.entity.Role;
 import com.infogain.app.entity.Store;
 
@@ -42,6 +43,7 @@ public class UserDto {
 	private Byte status;
 	private String lastLogin;
 	private String forgetPasswordToken;	
+	@JsonIgnore
 	private List<Role> role;
 	
 	
@@ -174,8 +176,7 @@ public class UserDto {
 	public List<Role> getRole() {
 		return role;
 	}
-
-
+	
 	public void setRole(List<Role> role) {
 		this.role = role;
 	}

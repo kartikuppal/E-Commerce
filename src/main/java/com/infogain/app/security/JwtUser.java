@@ -1,4 +1,4 @@
-package com.infogain.app.authorization;
+package com.infogain.app.security;
 
 public class JwtUser {
 private String email;

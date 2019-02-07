@@ -1,6 +1,7 @@
 package com.infogain.app.controller;
 
-
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.infogain.app.authorization.JwtTokenDecoder;
+
 import com.infogain.app.dto.UserDto;
+import com.infogain.app.entity.Role;
 import com.infogain.app.entity.User;
 import com.infogain.app.exception.CustomException;
+import com.infogain.app.exception.InvalidInputException;
+import com.infogain.app.security.JwtTokenDecoder;
 import com.infogain.app.service.UserServiceImpl;
 import redis.clients.jedis.Jedis;
 
@@ -34,10 +38,9 @@ public class UserController {
 	Jedis jedis = new Jedis();
 
 	@PostMapping("/redis/{id}")
-	public Integer getRedis(@PathVariable(value="id") Integer ids)
-	{
-		
-		return userService.getRedis(ids);		
+	public Integer getRedis(@PathVariable(value = "id") Integer ids) {
+
+		return userService.getRedis(ids);
 	}
 
 	@GetMapping("/userActivation/{id}")
@@ -45,44 +48,46 @@ public class UserController {
 		userService.activation(userId);
 		return "Your Account is Activated !!!";
 	}
-	
+
 	@GetMapping("/ActiveUserList")
-	public List<UserDto> getActiveUsers()
-	{
+	public List<UserDto> getActiveUsers() {
 		return userService.getActiveUsers();
 	}
-	
+
 	@GetMapping("/getActiveNames")
-	public List<String> getActiveNames()
-	{
+	public List<String> getActiveNames() {
 		return userService.getActiveUserName();
 	}
 
 	@PostMapping("/forgetPassword")
-	public void forgetPassword(HttpServletRequest request, @RequestHeader("email") String email) throws Exception {
+	public void forgetPassword(HttpServletRequest request, @RequestHeader("email") String email)
+			throws Exception {
 		userService.forgetPassword(email, request);
-}
+	}
 
 	@PostMapping("/forgetPassword/{token}")
 	public void resetPassword(@PathVariable(value = "token") String token,
-			@RequestHeader("newPassword") String newPassword) 
-	{
+			@RequestHeader("newPassword") String newPassword) {
 		userService.resetPassword(token, newPassword);
 	}
-	
+
 	@GetMapping("/user")
-	public ResponseEntity<?> getAll(HttpServletRequest request) {
-		//HttpHeaders headers = new HttpHeaders();
+	public ResponseEntity<?> getAll(HttpServletRequest request) throws InvalidInputException {
+		// HttpHeaders headers = new HttpHeaders();
 		String token = request.getHeader("Authorization");
-		System.out.println("****************************"+token);
-		User user = tokenDecoder.decode(token);
-		String authenticatedToken = jedis.get(user.getEmail());
-		if(authenticatedToken==null)
-		{
-			throw new RuntimeException("Already Logged in ");
-		}
+		UserDto  userDto = tokenDecoder.decode(token);
+		String authenticatedToken = jedis.get(userDto.getEmail());
+
+		//edr ArrayList ch Role da object define krn naal nai chal rea... kyu ?
+		ArrayList role = new ArrayList();
+				role = (ArrayList) userDto.getRole();
+				LinkedHashMap<Object, Object> roleHash = (LinkedHashMap<Object,Object>)role.get(0);	
+				
 		
-	  
+	
+		if (!roleHash.get("role").equals("admin")) {
+			throw new InvalidInputException(420,"Only Admin can view all users");
+		}
 		return new ResponseEntity(userService.getAll(), HttpStatus.OK);
 	}
 

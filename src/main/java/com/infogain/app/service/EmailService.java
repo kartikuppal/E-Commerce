@@ -1,12 +1,10 @@
 package com.infogain.app.service;
 
 import java.io.UnsupportedEncodingException;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -25,7 +23,6 @@ public class EmailService {
 
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-
 		try {
 			message.setFrom(new InternetAddress());
 			message.setContent("<h1>Registeration Successfull !</h1>" + "YOUR ACCOUNT IS READY<br><br><br>Hello " + name

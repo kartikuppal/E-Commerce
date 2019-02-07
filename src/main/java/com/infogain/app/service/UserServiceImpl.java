@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
@@ -132,7 +133,7 @@ public class UserServiceImpl implements IUserService {
 		userDto.setName(user.getName());
 		userDto.setStatus((byte) user.getStatus());
 		userDto.setLastLogin(user.getLastLogin());
-
+		userDto.setRole(user.getRole());
 		return userDto;
 	}
 
@@ -144,7 +145,7 @@ public class UserServiceImpl implements IUserService {
 		user.setPassword(userDto.getPassword());
 		user.setPostalCode(userDto.getPostalCode());
 		user.setName(userDto.getName());
-		user.setStatus(userDto.getStatus());
+		user.setRole(userDto.getRole());
 		
 		return user;
 	}
@@ -189,11 +190,6 @@ public class UserServiceImpl implements IUserService {
 		return userDtoList;
 	}
 
-	/*
-	 * @Override public UserDto getById(Integer id) { UserDto userDto = new
-	 * UserDto(); User user = userRepo.findById(id).get(); userDto =
-	 * entityToDtoAssembler(userDto, user); return userDto; }
-	 */
 	
 	@Override
 	public UserDto getById(Integer id) {
@@ -221,8 +217,9 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDto insert(UserDto userDto) throws InvalidInputException {
 		User user = new User();
-		user = userRepo.findByEmail(userDto.getEmail());
-		if(user != null)
+		User user2 = new User(); 
+		user2 = userRepo.findByEmail(userDto.getEmail());
+		if(user2 != null)
 		{
 			throw new InvalidInputException(404,"UserName already exist");
 		}
@@ -241,22 +238,21 @@ public class UserServiceImpl implements IUserService {
 
 		try {
 			userDto.setPassword(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8));
+			//Setting role as user by default
+			List<Role> roleList= new ArrayList<>();		
+			Role role = new Role();
+			role = roleRepo.findById(1).get();
+			roleList.add(role);	
+			userDto.setRole(roleList);	
 			user = dtoToEntityAssembler(userDto, user);
 			user.setStatus((byte) 0);
-			userDto.setStatus((byte) 0);
-			//Setting role as user by default
-			List<Role> roles = new ArrayList<>();
-			List<Integer> ids = new ArrayList<>();
-			ids.add(1);
-			roles = roleRepo.findByIdIn(ids);
-			user.setRole(roles);
+			userDto.setRole(roleList);
 			userRepo.save(user);
-			
+			userDto.setStatus((byte) 0);
 			userDto.setId(user.getId());
-			userDto.setRole(roles);
-			emailService.activeStatusMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(),
-					userDto.getId());
 			emailService.activeStatusMail(userDto.getEmail(), userDto.getPassword(), userDto.getName(),userDto.getId());
+			
+
 		} catch (Exception e) {
 			throw new InvalidInputException(400, "Something went Wrong");
 		}

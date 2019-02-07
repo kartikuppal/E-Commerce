@@ -9,12 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 public class Role {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String role;
+	private String name;
 
 	@ManyToMany(mappedBy = "role", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<User> user;
@@ -22,10 +26,18 @@ public class Role {
 	public Role() {
 		}
 
-	public Role(Integer id, String role) {
+/*	
+	public Role(Integer id, String name, List<User> user) {
 		super();
 		this.id = id;
-		this.role = role;
+		this.name = name;
+		this.user = user;
+	}*/
+	@JsonCreator
+	public Role(@JsonProperty("id") Integer id, @JsonProperty("name")String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public Integer getId() {
@@ -36,17 +48,28 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
+	public String getName() {
+		return name;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@JsonIgnore
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", role=" + role + "]";
+		return "Role [id=" + id + ", name=" + name +  "]";
 	}
+
+	
 
 }

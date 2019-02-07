@@ -1,6 +1,7 @@
 package com.infogain.app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,5 @@ import com.infogain.app.entity.Role;
 public interface IRoleRepo extends JpaRepository<Role,Integer>  {
 	
 	List<Role> findByIdIn(List<Integer> id);
-
+	Role findByName(String name);
 }

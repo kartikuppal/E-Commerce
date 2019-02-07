@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.infogain.app.authorization.JwtGenerator;
-import com.infogain.app.authorization.JwtUser;
-import com.infogain.app.authorization.LoginResponse;
+
+import com.infogain.app.dto.UserDto;
 import com.infogain.app.entity.User;
+import com.infogain.app.security.JwtGenerator;
+import com.infogain.app.security.JwtUser;
+import com.infogain.app.security.LoginResponse;
 import com.infogain.app.service.LoginService;
 import redis.clients.jedis.Jedis;
 
@@ -30,22 +32,22 @@ public class LoginController {
 		HttpHeaders headers = new HttpHeaders();
 		LoginResponse loginResponse = new LoginResponse();
 					
-				User user = new User();
-				user = loginService.login(jwtUser.getEmail(),jwtUser.getPassword());
-				if(user != null) {
+				UserDto userDto = new UserDto();
+				userDto = loginService.login(jwtUser.getEmail(),jwtUser.getPassword());
+				if(userDto != null) {
 				 
-				if(jedis.get(user.getEmail())==null)
+				if(jedis.get(userDto.getEmail())==null)
 					//To check whether user is already logged in or not
 				{	
-					String token = jwtGenerator.generateToken(user);
-					jedis.set(user.getEmail(),token);
+					String token = jwtGenerator.generateToken(userDto);
+					jedis.set(userDto.getEmail(),token);
 					loginResponse.setToken(token);
 					loginResponse.setStatus(HttpStatus.CREATED.toString());
 				}
 				else
 				{
 					loginResponse.setStatus(HttpStatus.UNAUTHORIZED.toString());
-					loginResponse.setToken("Already logged in !:)");
+					loginResponse.setToken("Already logged in ");
 				}
 				
 				}

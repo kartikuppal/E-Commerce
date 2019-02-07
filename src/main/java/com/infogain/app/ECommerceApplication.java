@@ -4,8 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
-//@EnableJpaRepositories(repositoryFactoryBeanClass=IStoreRepo.class)
-//@ComponentScan(basePackages = "com.infogain.app.controller")
+
+
+import com.infogain.app.repository.IStoreRepo;
+
 @SpringBootApplication
 @EnableCaching
 public class ECommerceApplication {
@@ -14,3 +16,18 @@ public class ECommerceApplication {
 		SpringApplication.run(ECommerceApplication.class, args);
 	}
 }
+/*
+{
+    "name": "Mr. Anonymous",
+    "email": "kartik.uppal@infogain.com",
+    "address": "Batala road Amritsar",
+    "postalCode": "143001",
+    "mobileNumber": "9876543212"
+    
+    }
+    
+    userName
+    password
+    Authorization
+    
+    */
